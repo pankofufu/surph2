@@ -1,7 +1,10 @@
 //import Args from "@surph/src/classes/Args";
 import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
-import { Modals, Embeds, reply } from "@surph/lib/message";
+import { Embeds, reply } from "@surph/lib/message";
+
+import { hostname } from "os";
+import { client } from "../..";
 
 export default class PingCommand extends Command {
     constructor(){super({
@@ -9,7 +12,7 @@ export default class PingCommand extends Command {
     })}
 
     run(message: Message): void | Promise<void> {
-        // reply(message, 'What you gonna do for me today drake?');
-        reply(message, 'Pong (wip)');
+                                                          /*  shards take a while to come up  */
+        reply(message, {embed: Embeds.Basic(`:ping_pong:  \`${client.shards.get(0)?.latency}ms\`\n:satellite:  \`${hostname()}\``)});
     }
 }

@@ -22,7 +22,7 @@ export const Carousel = async (message: Message, cycle: Embed[]) => {
     const sentmsg = await reply(message, 
         {
             embed: cycle[0],
-            components: [CarouselComponents(true, false)]
+            components: [CarouselComponents(true /* start of list, so it's first item */, (cycle.length == 1 ? true : false))]
         }
     )
     client.carousels.push({embeds: cycle, index: 0, message: message} as ActiveCarousel);
@@ -30,7 +30,7 @@ export const Carousel = async (message: Message, cycle: Embed[]) => {
         client.carousels.filter((carousel, index) => {
             if (carousel.message.id === message.id) {
                 client.carousels.splice(index, 1); 
-                sentmsg.edit({components: [CarouselComponents(true, true)]});
+                sentmsg.edit({components: []});
                 return true
             }
             else return false;

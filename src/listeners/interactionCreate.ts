@@ -37,7 +37,7 @@ export default {
             clearTimeout(dialog.timeout);
 
             await interaction.editOriginalMessage({
-                 components: [Modals.DialogComponents(true)] // disable them
+                 components: [] // remove them
             })
 
             if (data.custom_id === 'yes') await dialog.onConfirm(interaction as ComponentInteraction);

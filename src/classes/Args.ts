@@ -40,9 +40,13 @@ export default class Args {
         xd.shift(); /* why does .shift() return the FUCKING value?? 
                        and STILL shift it?? WHAT THE FUCK!?? */
 
-        if (xd[0] /* if there's more after main command check for subcmd */) this.subcommand = Args.getSubcommand(xd[0].toLowerCase(), command);
+        if (xd[0] /* if there's more after main command check for subcmd */) {
+            this.subcommand = Args.getSubcommand(xd[0].toLowerCase(), command);
+            if (this.subcommand) xd.shift(); // shift again to remove subcommand,
+            //                                  but only if subcommand exists
+        }
 
-        xd.shift(); // shift again because we need to remove the subcommand
+        
         this.joined = xd.join(' ');
     }
 

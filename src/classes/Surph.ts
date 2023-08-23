@@ -5,7 +5,7 @@ import type Command from "@surph/src/classes/Commands/BaseCommand";
 import type Event from "@surph/src/classes/Event";
 import { __src } from "@surph/lib/util";
 import { Modals } from "@surph/lib/message";
-import { ReminderTimeout } from "lib/util/reminders";
+import { ReminderTimeout, continueWatching } from "lib/util/reminders";
 
 const fileFilter = (file: string) => {
     if (
@@ -46,6 +46,7 @@ export default class Surph extends Client {
 
         // Finally, start the bot
         await this.connect();
+        await continueWatching(); // Reminders
     }
 
 }

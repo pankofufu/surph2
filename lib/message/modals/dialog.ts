@@ -38,7 +38,7 @@ export const Dialog = async (options: ActiveDialog) => {
             client.dialogs.filter((dialog, index) => {
                 if (dialog.message.id === options.message.id) {
                     client.carousels.splice(index, 1); 
-                    sentmsg.edit({components: [DialogComponents(true)]});
+                    sentmsg.edit({components: []});
                     return true
                 }
                 else return false;

@@ -15,7 +15,10 @@ export default {
 
         try {
             const subcommand = args.subcommand;
-            if (subcommand && subcommand.run) subcommand.run(message, args);
+            if (subcommand) {
+                if (subcommand.preRun && (await subcommand.preRun(message, args)) === false) return;
+                if (subcommand.run) await subcommand.run(message, args);
+            }
             else {
                 if (command.preRun && (await command.preRun(message, args)) === false) return;
                 if (command.run) await command.run(message, args);

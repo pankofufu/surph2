@@ -1,7 +1,8 @@
 import { DbReminder, getUser, pullDB, setUser } from "./db"
 import { reply } from "../message";
 import { client } from "@surph/src/index";
-import { now } from "./time";
+import { inPast, now } from "./time";
+import { DueReminder } from "lib/message/embeds";
 
 export const setReminder = async (uid:string, reminder: DbReminder) => {
     const user = await getUser(uid);
@@ -10,12 +11,13 @@ export const setReminder = async (uid:string, reminder: DbReminder) => {
     watch(reminder);
     return;
 }
-export const delReminder = async (uid: string, mid: string) => {
+export const delReminder = async (uid: string, mid: string): Promise<null | void> => {
     const user = await getUser(uid);
-    user.reminders.every((r, i) => {
-        if (r.ids.msg === mid) user.reminders.splice(i, 1);
+    const exists = user.reminders.every((r, i) => {
+        if ( r.ids.msg === mid || r.timestamp === Number(mid) ) {user.reminders.splice(i, 1); return true;}
     });
-    const timeout = client.timeouts.find(t => t.mid === mid);
+    if (!exists) return null;
+    const timeout = client.timeouts.find(t => t.mid === mid) || client.timeouts.find(t => t.timestamp == Number(mid));
     if (timeout) clearTimeout(timeout.timeout);
     await setUser(uid, user);
     return;
@@ -36,6 +38,7 @@ export const clearReminders = async (uid: string) => {
 
 export interface ReminderTimeout {
     mid: string;
+    timestamp: number;
     timeout: NodeJS.Timeout;
 }
 
@@ -45,11 +48,11 @@ const watch = async (reminder: DbReminder) => {
     client.timeouts.push(
         {
             mid: reminder.ids.msg,
+            timestamp: reminder.timestamp,
             timeout: setTimeout(async () => {
-                /* Reminder finished polling */
                 const ref = await client.getMessage(reminder.ids.channel, reminder.ids.msg);
-                if (!ref) return; // cba
-                reply(ref, 'YouTube shorts');
+                if (!ref) return;
+                reply(ref, {embed: DueReminder(ref.author, reminder)});
                 await delReminder(reminder.ids.user, reminder.ids.msg);
             }, ((reminder.timestamp*1000) - (now()*1000)))
         } as ReminderTimeout);
@@ -60,10 +63,9 @@ export const continueWatching = async () => {
     const db = await pullDB();
     db.forEach(user => {
         user.value.reminders.forEach(async (reminder) => {
-            if ((reminder.timestamp*1000) < (now()*1000)) { await delReminder(reminder.ids.user, reminder.ids.msg); return; }
+            if (inPast(reminder.timestamp)) { await delReminder(reminder.ids.user, reminder.ids.msg); return; }
             if (client.timeouts.filter(x => x.mid === reminder.ids.msg)) return; // do not add if already watching (pls work)
             watch(reminder);
         });
     });
-    /* Started polling all remidners */
 }
