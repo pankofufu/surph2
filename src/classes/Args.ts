@@ -3,12 +3,13 @@ import { Message } from "eris";
 import { getmedia } from "lib/media/message";
 import Command from "./Commands/BaseCommand";
 import { client } from "..";
-import { Flags } from "@surph/lib/util";
 import SubCommand from "./Commands/SubCommand";
+import MediaCommand from "./Commands/MediaCommand";
+import { MediaSubType } from "lib/util/flags";
 
 export default class Args {
+    mediaTypes?: MediaSubType[]
 
-    wantsMedia: boolean;
     message: Message;
     joined: string;
 
@@ -27,10 +28,8 @@ export default class Args {
         return subcommands.find((subcommand) => (subcommand.name === val || subcommand.aliases?.includes(val))) || undefined;
     }
 
-    constructor(message: Message, command: Command) {
+    constructor(message: Message, command: MediaCommand | Command) {
         this.message = message; // nice one
-
-        this.wantsMedia = (command.flags && command.flags.filter(flag=>flag in Flags.Media)) ? true : false; // ok
 
         let xd = message.content.split(' ');
 
@@ -46,7 +45,7 @@ export default class Args {
             //                                  but only if subcommand exists
         }
 
-        
+        if ((this.command as MediaCommand).media !== undefined ) this.mediaTypes = (this.command as MediaCommand).media;
         this.joined = xd.join(' ');
     }
 
@@ -74,10 +73,9 @@ export default class Args {
                 flags.set(name, parsedValue);
             }
         }
-        if (this.wantsMedia && flags.has('url')) {
-            // look for media in messagse
-            const get = getmedia(this.message);
-            
+        if (this.mediaTypes && !flags.has('url')) {
+            // look for media in messages
+            const get = getmedia(this.message, this.mediaTypes);
             if (get) { flags.set('url', get.url); this.joined = get.replaced; /* url removed from content */ }
             
         }

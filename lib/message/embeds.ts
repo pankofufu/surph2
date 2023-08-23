@@ -1,6 +1,7 @@
 import { Embed, User } from "eris"
 import { Colors } from "@surph/lib/message";
 import { DbReminder } from "lib/util/db";
+import { s_Match } from "../api";
 
 export const Basic = (text: string, color?: Colors) => {
     return {
@@ -29,3 +30,17 @@ const BaseReminder = (user: User, title: string, reminder: DbReminder, color: Co
 export const SetReminder = (user: User, reminder: DbReminder) => BaseReminder(user, 'set successfully', reminder, Colors.Green);
 export const DueReminder = (user: User, reminder: DbReminder) => BaseReminder(user, 'due now', reminder, Colors.Yellow);
 export const ListReminder = (user: User, reminder: DbReminder, index: number, total: number) => BaseReminder(user, '', reminder, Colors.White, index, total);
+
+
+export const ShazamEmbed = (match: s_Match) => {
+    return {
+            title: match.metadata.title,
+            url: match.weburl,
+            author: { name: match.metadata.artist },
+            color: Colors.ShazamBlue,
+            image: {url: match.metadata.coverart},
+            footer: { text: 'Powered by Shazam', 
+            icon_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Shazam_icon.svg/2048px-Shazam_icon.svg.png' 
+        }
+    } as Embed;
+}

@@ -9,7 +9,7 @@ interface s_Metadata {
     openin: unknown; // only has apple music support so it's useless, don't bother type checking
     coverart: string;
 }
-interface s_Match {
+export interface s_Match {
     key: string;
     trackId: string;
     offset: number; // how far into the song the match is

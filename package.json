@@ -17,12 +17,16 @@
     "quick.db": "^9.1.7"
   },
   "devDependencies": {
+    "@discordjs/opus": "0.5",
     "@sapphire/ts-config": "^4.0.1",
     "@types/node": "^20.5.3",
     "@types/ws": "^8.5.5",
     "better-sqlite3": "^8.5.1",
+    "bufferutil": "4.0.7",
+    "sodium-native": "3.2",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.7",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "zlib-sync": "0.1"
   }
 }

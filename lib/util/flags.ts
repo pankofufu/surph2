@@ -1,11 +1,12 @@
-export enum Media {
-    Video = 'Video',
-    Audio = 'Audio',
-    Image = 'Image',
-}
-export enum Text {
-    URL = 'URL',
-    Text = 'Text'
-}
+export type MediaSubType = string[];
+export type MediaType = {
+    Video: string[];
+    Audio: string[];
+    Image: string[];
+};
 
-export type FlagType = Media | Text;
+export const Media: MediaType = {
+    Video: ["mp4", "mov", "mkv", "webm"],
+    Audio: ["mp3", "wav", "m4a", "flac"],
+    Image: ["jpg", "jpeg", "png"]
+};

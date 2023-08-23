@@ -18,7 +18,9 @@ const encode = (text: string): string => {
         .map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-export const req = async (endpoint: string, obj: object): Promise<ApiResponse> => {
+type Endpoints = 'shazam' | 'edit' | 'translate' | 'ocr' | 'download';
+
+export const req = async (endpoint: Endpoints, obj: object): Promise<ApiResponse> => {
     try {
 
         let args = `?`;

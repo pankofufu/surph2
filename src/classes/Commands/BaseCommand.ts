@@ -1,10 +1,6 @@
-import { Flags } from "@surph/lib/util";
 import type { Message } from "eris";
 import type Args from "../Args";
-import { FlagType } from "lib/util/flags";
 import SubCommand from "./SubCommand";
-
-type FlagArray = FlagType[];
 
 export interface CommandOptions {
     name: string;
@@ -13,7 +9,6 @@ export interface CommandOptions {
     aliases?: string[];
     subcommands?: SubCommand[];
     timeout?: number;
-    flags?: FlagArray;
     args?: Record<string, any>;
 }
 
@@ -25,7 +20,6 @@ export default class Command {
     aliases?: string[];
     subcommands?: SubCommand[];
     timeout?: number;
-    flags?: FlagArray;
     args?: Record<string, any>;
 
     constructor(options: CommandOptions) {
@@ -35,7 +29,6 @@ export default class Command {
         this.aliases = options.aliases;
         this.subcommands = options.subcommands;
         this.timeout = options.timeout;
-        this.flags = options.flags;
         this.args = options.args;
     }
 
