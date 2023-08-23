@@ -4,6 +4,8 @@ import { settings, token } from "@surph/config";
 import type Command from "@surph/src/classes/Commands/BaseCommand";
 import type Event from "@surph/src/classes/Event";
 import { __src } from "@surph/lib/util";
+import { Modals } from "@surph/lib/message";
+import { ReminderTimeout } from "lib/util/reminders";
 
 const fileFilter = (file: string) => {
     if (
@@ -19,6 +21,9 @@ const fileFilter = (file: string) => {
 
 export default class Surph extends Client {
     commands: Map<string, Command>;
+    carousels: Array<Modals.ActiveCarousel> = [];
+    dialogs: Array<Modals.ActiveDialog> = [];
+    timeouts: Array<ReminderTimeout> = [];
 
     constructor() {
         super(`Bot ${token}`, settings.client);
@@ -34,8 +39,8 @@ export default class Surph extends Client {
         });
         readdirSync(`${__src}/commands`/* Should always have subdirs */).forEach(subdir => {
             readdirSync(`${__src}/commands/${subdir}`).filter(fileFilter).forEach(async command => {
-                const imported = (await import(`${__src}/commands/${subdir}/${command}`)).default as Command;
-                this.commands.set(imported.options.name, imported);
+                const imported = new (await import(`${__src}/commands/${subdir}/${command}`)).default as Command;
+                this.commands.set(imported.name, imported);
             });
         });
 

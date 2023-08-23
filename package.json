@@ -12,7 +12,8 @@
   "dependencies": {
     "@types/colors": "^1.2.1",
     "colors": "^1.4.0",
-    "eris": "^0.17.2"
+    "eris": "^0.17.2",
+    "quick.db": "^9.1.7"
   },
   "devDependencies": {
     "@sapphire/ts-config": "^4.0.1",
