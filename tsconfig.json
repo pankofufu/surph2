@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+		"target": "ESNext",
+		"module": "NodeNext",
+		"allowJs": true,
+
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"skipLibCheck": true,
+
+		"strict": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"sourceMap": true,
+
+        "baseUrl": ".",
+        "outDir": "dist",
+        "paths": {
+            "@surph/src/*": ["src/*"],
+            "@surph/src": ["src/index.ts"],
+
+            "@surph/lib/api": ["lib/api/index.ts"],
+            "@surph/lib/util": ["lib/util/index.ts"],
+            "@surph/lib/media": ["lib/media/index.ts"],
+
+            "@surph/config": ["config.ts"]
+        }
+    },
+    "include": ["src/**/*", "lib/**/*", "tests/**/*"],
+    "exclude": [
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts"
+    ]
+}

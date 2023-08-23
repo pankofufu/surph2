@@ -1,0 +1,25 @@
+{
+  "name": "surph",
+  "version": "3.0",
+  "main": "dist/run.js",
+  "scripts": {
+    "compile": "tsc --build --clean && tsc --build && tsc-alias",
+    "prod": "yarn compile && NODE_ENV=development && node dist/src/index.js",
+    "test": "NODE_ENV=development && ts-node -r tsconfig-paths/register tests/index.ts",
+    "dev": "NODE_ENV=development && ts-node -r tsconfig-paths/register src/index.ts"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@types/colors": "^1.2.1",
+    "colors": "^1.4.0",
+    "eris": "^0.17.2"
+  },
+  "devDependencies": {
+    "@sapphire/ts-config": "^4.0.1",
+    "@types/node": "^20.5.3",
+    "@types/ws": "^8.5.5",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.7",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
