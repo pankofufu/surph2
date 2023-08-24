@@ -10,6 +10,19 @@ export const Basic = (text: string, color?: Colors) => {
     } as Embed;
 }
 
+export const BasicError = (text: string) => {
+    return {
+        description: `:octagonal_sign:  ${text}`,
+        color: Colors.Red
+    }
+}
+export const ErrorWithStack = (text: string, stack: string) => {
+    return {
+        description: `:octagonal_sign:  ${text}\n\`\`\`${stack}\`\`\``,
+        color: Colors.Red
+    }
+}
+
 //                                                         Reminder      / Total reminders
 const BaseReminder = (user: User, title: string, reminder: DbReminder, color: Colors, index?: number, total?: number) => {
     return {

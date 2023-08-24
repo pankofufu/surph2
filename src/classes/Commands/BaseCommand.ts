@@ -1,5 +1,5 @@
 import type { Message } from "eris";
-import type Args from "../Args";
+import {BaseArgs} from "../Args";
 import SubCommand from "./SubCommand";
 
 export interface CommandOptions {
@@ -9,7 +9,6 @@ export interface CommandOptions {
     aliases?: string[];
     subcommands?: SubCommand[];
     timeout?: number;
-    args?: Record<string, any>;
 }
 
 export default class Command {
@@ -20,7 +19,6 @@ export default class Command {
     aliases?: string[];
     subcommands?: SubCommand[];
     timeout?: number;
-    args?: Record<string, any>;
 
     constructor(options: CommandOptions) {
         this.name = options.name;
@@ -29,15 +27,21 @@ export default class Command {
         this.aliases = options.aliases;
         this.subcommands = options.subcommands;
         this.timeout = options.timeout;
-        this.args = options.args;
     }
 
-    static _preRun(message: Message, args: Args, command: Command) {
-        /* TODO: Default pre-run managing timeouts and what-not */
+    static check(message: Message, args: BaseArgs, command: Command) {
+        /* TODO: Default before run function managing timeouts and what-not */
     }
 
-    preRun?(message: Message, args: Args): boolean | Promise<boolean>;
-    run?(message: Message, args: Args): void | Promise<void>; // pls be true...
+    getSubcommand?(name: string) {
+        return this.subcommands?.find(sub=>
+            sub.name === name ||
+            ( sub.aliases && sub.aliases.includes( name ) )
+        )
+    }
+
+    parseArgs?(message: Message, sliced: string): BaseArgs;
+    run?(message: Message, args: BaseArgs): void | Promise<void>; // pls be true...
 
     onUserError?(message: Message, error: unknown): void | Promise<void>;
     onClientError?(message: Message, error: unknown): void | Promise<void>;

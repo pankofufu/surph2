@@ -1,8 +1,6 @@
-//import Args from "@surph/src/classes/Args";
 import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
 import { Embeds, reply } from "@surph/lib/message";
-
 import { hostname } from "os";
 import { client } from "../..";
 

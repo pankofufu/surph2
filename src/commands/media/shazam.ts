@@ -1,27 +1,46 @@
-import Args from "@surph/src/classes/Args";
+import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
-import { Colors, Embeds, reply } from "@surph/lib/message";
-import MediaCommand from "@surph/src/classes/Commands/MediaCommand";
+import { Embeds, reply } from "@surph/lib/message";
+import { hostname } from "os";
+import { client } from "../..";
+import { BaseArgs, getFlags } from "@surph/src/classes/Args";
+import { BasicError } from "lib/message/embeds";
+import { getmedia } from "lib/media/message";
 import { Media } from "lib/util/flags";
-import { Shazam, req } from "@surph/lib/api";
-import { ShazamEmbed } from "lib/message/embeds";
 
-export default class ShazamCommand extends MediaCommand {
+interface ExtFlags {
+    url?: string;
+    offset?: string; // All types have to be strings, and converted into other types in Args
+}
+
+interface ExtArgs extends BaseArgs {
+    url: string | null;
+    offset: number | null;
+}
+
+export default class ShazamCommand extends Command {
+
     constructor(){super({
-        name: 'shazam',
-        usage: '<attachment/url/reply to a message with media>',
-        media: [Media.Video, Media.Audio]
+        name: 'shazam'
     })}
 
-    async run(message: Message, args: Args): Promise<void> {
-        const url: string = args.options.get('url');
-        if (!url) { reply(message, {embed: Embeds.Basic(`Invalid/no media provided.`, Colors.Red)}); return; }
-        const res = await req('shazam', {url: url});
-        if (res.type === 'err') return; // Implement later :)
-        const {matches} = res.data as Shazam;
-        if (matches.length == 0) return; // Implement later :)
+    parseArgs(message: Message, sliced: string) { // Remove %ping from content and then find args
+        const flags: ExtFlags = Object.fromEntries(getFlags(sliced));
 
-        reply(message, {embed: ShazamEmbed(matches[0])});
+        /* Logic to get URL from message */
+        const url = flags.url || getmedia(message, [Media.Audio, Media.Video])?.url || null;
+        /* Logic to get Shazam offset */
+        let number = Number( flags.offset || sliced.split(' ').find(word=>!isNaN(Number(word))) );
+        if (isNaN(number) || flags.offset === 'true' /* true means no value supplied */) number = 0;
 
+        const parsed: ExtArgs = { content: { before: message.content, after: sliced },
+            url: url,
+            offset: number
+         };
+        return parsed;
+    }
+
+    run(message: Message, args: ExtArgs): void | Promise<void> {
+        if (!args.url) { reply(message, {embed: BasicError('No media supplied.')}); return; }
     }
 }
