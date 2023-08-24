@@ -12,26 +12,44 @@ interface Media {
     replaced: string
 } 
 // todo: add choice of multiple attachments if found
-export const getmedia = (msg: Message, mediaTypes: MediaSubType[], fromRef?: boolean): Media | null => {
-    let res: Media;
 
-    const ref = getrefmsg(msg);
-    if (ref && !fromRef) { return getmedia(ref, mediaTypes, true) }
-    if (msg.attachments.length !== 0) res = {url: msg.attachments[0].url, replaced: msg.content};
+interface GetMediaOptions {
+    message: Message,
+    content?: string,
+    types: MediaSubType[],
+    fromReference?: boolean,
+    attachmentsOnly?: boolean
+}
+
+export const getmedia = (options: GetMediaOptions): Media | null => {
+    let res: Media;
+    let content: string;
+    if (options.content) content = options.content;
+    else content = options.message.content;
+
+    const ref = getrefmsg(options.message);
+    if (ref && !options.fromReference) { 
+        const _options = options; 
+        _options.message = ref; 
+        return getmedia(_options) 
+    }
+    if (options.message.attachments.length !== 0) 
+        res = {url: options.message.attachments[0].url, replaced: content};
     else {
-        const match = msg.content.match(urlregex);
+        const match = options.message.content.match(urlregex);
         let matchURL: string | null = null;
 
         if (!match) return matchURL;
         match.every(url => { 
-            mediaTypes.every(type=>{
-                if (type.includes(path.extname(url).slice(1))) matchURL = url; 
+            options.types.every(type=>{
+                if (type.includes(path.extname(url).slice(1))) matchURL = url;
+                if (type.find( whitelisted => whitelisted.includes( new URL(url).hostname ) )) matchURL = url;
                 return true; 
             });
         });
         if (!matchURL) return null;
 
-        res = {url: matchURL, replaced: msg.content.replace(urlregex, '')};
+        res = {url: matchURL, replaced: content.replace(urlregex, '')};
     }
 
     return res;

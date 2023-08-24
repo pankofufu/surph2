@@ -22,3 +22,9 @@ export interface Shazam {
     matches: s_Match[];
     recordingIntermission: number;
 }
+
+export interface TranslationResult {
+    text: string;
+    from: string;
+    to: string;
+}

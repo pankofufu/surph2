@@ -3,5 +3,6 @@ export enum Colors {
     Red = 0xFF0000,
     Yellow = 0xf5B400,
     Green = 0x00E600,
-    ShazamBlue = 0x0099FF
+    ShazamBlue = 0x0099FF,
+    TranslationBlue = 0x4286F5
 }

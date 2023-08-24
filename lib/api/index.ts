@@ -7,8 +7,9 @@ import { api } from "@surph/config";
 import path from "path";
 
 type ApiResponseType = 'buf' | 'json' | 'err'
-type ApiResponseDataType = object | { file: { type: string, buf: Buffer } };
-interface ApiResponse {
+type ApiResponseDataType = Record<string, any> | ApiBufferResponse;
+export interface ApiBufferResponse { type: string, buf: Buffer };
+export interface ApiResponse {
     type: ApiResponseType;
     data: ApiResponseDataType;
 }
@@ -44,7 +45,7 @@ export const req = async (endpoint: Endpoints, obj: object): Promise<ApiResponse
         }
     }
     catch (e) {
-        return { type: 'err', data: { reason:`${e}` } };
+        return { type: 'err', data: { reason: `${e}` } };
     }
 }
 

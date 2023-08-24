@@ -1,7 +1,8 @@
 import { Embed, User } from "eris"
 import { Colors } from "@surph/lib/message";
 import { DbReminder } from "lib/util/db";
-import { s_Match } from "../api";
+import { TranslationResult, s_Match } from "../api";
+import { ReadableStreamDefaultController } from "node:stream/web";
 
 export const Basic = (text: string, color?: Colors) => {
     return {
@@ -55,5 +56,17 @@ export const ShazamEmbed = (match: s_Match) => {
             footer: { text: 'Powered by Shazam', 
             icon_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Shazam_icon.svg/2048px-Shazam_icon.svg.png' 
         }
+    } as Embed;
+}
+
+export const TranslationEmbed = (translation: TranslationResult) => {
+    return {
+        description: `\`\`\`${translation.text}\`\`\``,
+        color: Colors.TranslationBlue,
+        thumbnail: {url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Google_Translate_logo.svg/2048px-Google_Translate_logo.svg.png'},
+        fields: [
+            {name: 'From', value: `\`${translation.from}\``, inline: true},
+            {name: 'To', value: `\`${translation.to}\``, inline: true}
+        ]
     } as Embed;
 }

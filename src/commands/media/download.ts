@@ -6,48 +6,43 @@ import { client } from "../..";
 import { BaseArgs } from "@surph/src/classes/Args";
 import { Basic, BasicError, ShazamEmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
-import { Media, getFlags } from "lib/util/flags";
-import { Shazam, req } from "@surph/lib/api";
+import { Media, _Text, getFlags } from "lib/util/flags";
+import { req } from "@surph/lib/api";
 
 interface ExtFlags {
     url?: string;
-    offset?: string; // All types have to be strings, and converted into other types in Args
+    audio?: boolean; // What?
 }
 
 interface ExtArgs extends BaseArgs {
     url: string | null;
-    offset: number | null;
+    audio?: boolean;
 }
 
-export default class ShazamCommand extends Command {
+export default class DownloadCommand extends Command {
 
     constructor(){super({
-        name: 'shazam'
+        name: 'download',
+        aliases: ['dl']
     })}
 
     parseArgs(message: Message, sliced: string) { // Remove %ping from content and then find args
         const flags: ExtFlags = Object.fromEntries(getFlags(sliced).flags);
 
         /* Logic to get URL from message */
-        const url = flags.url || getmedia({message: message, types: [Media.Audio, Media.Video]})?.url || null;
-        /* Logic to get Shazam offset */
-        let number = Number( flags.offset || sliced.split(' ').find(word=>!isNaN(Number(word))) );
-        if (isNaN(number) || flags.offset === 'true' /* true means no value supplied */) number = 0;
+        const url = flags.url || getmedia({message: message, types: [_Text.URL]})?.url || null;
 
         const parsed: ExtArgs = { content: { before: message.content, after: sliced },
             url: url,
-            offset: number
+            audio: flags.audio || false
          };
         return parsed;
     }
 
     async run(message: Message, args: ExtArgs): Promise<void> {
         if (!args.url) { await reply(message, {embed: BasicError('No media supplied.')}); return; }
-        const matches = (( await req('shazam', {url: args.url})).data as Shazam).matches;
-        if (matches.length == 0 || !matches) { await reply(message, {
-            embed: Basic('No matches found.', Colors.ShazamBlue)}); return; }
-       
-        await reply(message, {embed: ShazamEmbed(matches[0])});
+        const res = await req('download', {url: args.url, audio: (args.audio ? 1 : 0)});
+        //await reply(message, {embed: ShazamEmbed(matches[0])});
         return;
     }
 }

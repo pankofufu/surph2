@@ -14,7 +14,8 @@
     "chrono-node": "^2.6.5",
     "colors": "^1.4.0",
     "eris": "^0.17.2",
-    "quick.db": "^9.1.7"
+    "quick.db": "^9.1.7",
+    "ytsr": "^3.8.4"
   },
   "devDependencies": {
     "@discordjs/opus": "0.5",
