@@ -53,13 +53,19 @@ export default class RemindCommand extends Command {
     })}
 
     parseArgs(message: Message, sliced: string): ExtArgs {
-        let subcommand: string | null;
+        let subcommand: string | undefined = undefined;
         const firstArg = sliced.split(' ')[0].toLowerCase();
-        if (this.getSubcommand && this.getSubcommand(firstArg)) subcommand = firstArg;
-        else subcommand = null;
+
+        this.subcommands?.forEach(
+            sub=>{
+                if (sub.name === firstArg || sub.aliases && sub.aliases.includes(firstArg))
+                { subcommand = sub.name; return true;} else return false;
+        })
+
         const time = Time.parse(sliced);
         return {
             time: time?.timestamp || null,
+            subcommand: subcommand,
             content: {before: message.content, after: time?.clean} // use args.content.after as reminder info
         }
     }

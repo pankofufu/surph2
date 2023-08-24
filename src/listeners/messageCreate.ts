@@ -16,26 +16,13 @@ export default {
 
         const sliced = message.content.slice( prefix.length+command.name.length +1 );
         const args = command.parseArgs?.(message, sliced) || DefaultArgs(sliced);
-
-
-        if (
-            command.getSubcommand ||
-            (command.getSubcommand && args.subcommand && (command.getSubcomjh  bghjvnmgv bhjtuvygjhfbc jgvtyub fchjujvgtyubfc jhubmand('testhjgv fbn')))
-        )
+        const subcommand = args.subcommand ? command.subcommands?.get(args.subcommand) : undefined;
 
         try {
-            const reactionTimeout = setTimeout(async ()=>{ await reaction.add(Emojis.Loading, message) }, 1500);
-            if (args.subcommand && command.getSubcommand) {
-                const subcommand = command.getSubcommand(args.subcommand);
-                if (!subcommand) return;
-                if (subcommand.run) await subcommand.run(message, args);
-            } else {
-                if (command.run) await command.run(message, args);
-            }
-            clearTimeout(reactionTimeout);
-        } catch (e) {
-            console.log(e);
-        }
-
+            const reactionTimeout = setTimeout(async()=>{reaction.add(Emojis.Loading, message)}, 2000);
+            if (subcommand && subcommand.run) await subcommand.run(message, args);
+            else if (command.run) await command.run(message, args);
+            await reaction.remove(Emojis.Loading, message); clearInterval(reactionTimeout);
+        } catch (e) {console.error(e);}
     },
 } as Event;

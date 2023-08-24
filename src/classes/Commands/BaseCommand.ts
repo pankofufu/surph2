@@ -17,7 +17,7 @@ export default class Command {
     description?: string;
     usage?: string;
     aliases?: string[];
-    subcommands?: SubCommand[];
+    subcommands?: Map<string, SubCommand>;
     timeout?: number;
 
     constructor(options: CommandOptions) {
@@ -25,19 +25,18 @@ export default class Command {
         this.description = options.description;
         this.usage = options.usage;
         this.aliases = options.aliases;
-        this.subcommands = options.subcommands;
+
+
+
+        if (options.subcommands) { this.subcommands = new Map();
+        options.subcommands.forEach((subcommand: SubCommand) => 
+            this.subcommands?.set(subcommand.name, subcommand));
+        }
         this.timeout = options.timeout;
     }
 
     static check(message: Message, args: BaseArgs, command: Command) {
         /* TODO: Default before run function managing timeouts and what-not */
-    }
-
-    getSubcommand?(name: string) {
-        return this.subcommands?.find(sub=>
-            sub.name === name ||
-            ( sub.aliases && sub.aliases.includes( name ) )
-        )
     }
 
     parseArgs?(message: Message, sliced: string): BaseArgs;
