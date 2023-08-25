@@ -34,12 +34,13 @@ export default class Surph extends Client {
         // You don't have to like it, but I gotta like it.
         readdirSync(`${__src}/listeners`).filter(fileFilter).forEach(async event => {
             const imported = (await import(`${__src}/listeners/${event}`)).default as Event;
+
             if (imported.once) this.once(imported.name, imported.run);
             else this.on(imported.name, imported.run);
         });
         readdirSync(`${__src}/commands`/* Should always have subdirs */).forEach(subdir => {
             readdirSync(`${__src}/commands/${subdir}`).filter(fileFilter).forEach(async command => {
-                const imported = new (await import(`${__src}/commands/${subdir}/${command}`)).default as Command;
+                const imported = new (await import(`${__src}/commands/${subdir}/${command}`)).default as Event;
                 this.commands.set(imported.name, imported);
             });
         });

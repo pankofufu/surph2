@@ -4,10 +4,10 @@ import { Colors, Embeds, reply } from "@surph/lib/message";
 import { hostname } from "os";
 import { client } from "../..";
 import { BaseArgs } from "@surph/src/classes/Args";
-import { Basic, BasicError, OCREmbed, ShazamEmbed } from "lib/message/embeds";
+import { Basic, BasicError, ErrorWithStack, OCREmbed, ShazamEmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
 import { Media, getFlags } from "lib/util/flags";
-import { OCRResult, Shazam, req } from "@surph/lib/api";
+import { APIError, OCRResult, Shazam, req } from "@surph/lib/api";
 
 interface ExtFlags {
     url?: string;
@@ -36,7 +36,9 @@ export default class OCRCommand extends Command {
 
     async run(message: Message, args: ExtArgs): Promise<void> {
         if (!args.url) { await reply(message, {embed: BasicError('Invalid/no media supplied.')}); return; }
-        const res = (( await req('ocr', {url: args.url})).data as OCRResult);
+        const apiReq = await req('ocr', {url: args.url});
+        if (apiReq.type !== 'json') { reply(message, {embed: ErrorWithStack('Something went wrong.', (apiReq.data as APIError).reason)}); return; };
+        const res = (apiReq.data as OCRResult);
         await reply(message, {embed: OCREmbed(res)});
         return;
     }

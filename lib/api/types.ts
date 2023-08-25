@@ -33,3 +33,7 @@ export interface OCRResult {
     text: string;
     lang: string;
 }
+
+export interface APIError {
+    reason: string;
+}

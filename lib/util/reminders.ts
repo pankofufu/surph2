@@ -15,6 +15,7 @@ export const delReminder = async (uid: string, mid: string): Promise<null | void
     const user = await getUser(uid);
     const exists = user.reminders.every((r, i) => {
         if ( r.ids.msg === mid || r.timestamp === Number(mid) ) {user.reminders.splice(i, 1); return true;}
+        else return false;
     });
     if (!exists) return null;
     const timeout = client.timeouts.find(t => t.mid === mid) || client.timeouts.find(t => t.timestamp == Number(mid));

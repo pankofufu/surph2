@@ -4,10 +4,10 @@ import { Colors, Embeds, reply } from "@surph/lib/message";
 import { hostname } from "os";
 import { client } from "../..";
 import { BaseArgs } from "@surph/src/classes/Args";
-import { Basic, BasicError, ShazamEmbed } from "lib/message/embeds";
+import { Basic, BasicError, ErrorWithStack, ShazamEmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
 import { Media, getFlags } from "lib/util/flags";
-import { Shazam, req } from "@surph/lib/api";
+import { APIError, Shazam, req } from "@surph/lib/api";
 
 interface ExtFlags {
     url?: string;
@@ -43,8 +43,10 @@ export default class ShazamCommand extends Command {
 
     async run(message: Message, args: ExtArgs): Promise<void> {
         if (!args.url) { await reply(message, {embed: BasicError('Invalid/no media supplied.')}); return; }
-        const matches = (( await req('shazam', {url: args.url})).data as Shazam).matches;
-        if (matches.length == 0 || !matches) { await reply(message, {
+        const res = await req('shazam', {url: args.url});
+        if (res.type !== 'json') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
+        const matches = (res.data as Shazam).matches;
+        if (!matches || (matches && matches.length == 0)) { await reply(message, {
             embed: Basic('No matches found.', Colors.ShazamBlue)}); return; }
        
         await reply(message, {embed: ShazamEmbed(matches[0])});

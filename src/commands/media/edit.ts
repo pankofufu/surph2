@@ -4,9 +4,9 @@ import { Colors, Embeds, reply } from "@surph/lib/message";
 import { BaseArgs } from "@surph/src/classes/Args";
 import { getmedia } from "lib/media/message";
 import { Media } from "lib/util/flags";
-import { ApiBufferResponse, req } from "@surph/lib/api";
+import { APIError, ApiBufferResponse, req } from "@surph/lib/api";
 import { getFlags } from "lib/util/flags";
-import { BasicError } from "lib/message/embeds";
+import { BasicError, ErrorWithStack } from "lib/message/embeds";
 
 interface ExtFlags {
     media?: string; // URL will be confusing because we will be using URLs in the music= command
@@ -50,7 +50,7 @@ export default class EditCommand extends Command {
         if (!vebArgs) { reply(message, {embed: BasicError('No args to edit media with.')}); return; }
         
         const res = await req('edit', {url: args.url, args: vebArgs});
-        if (res.type !== 'buf') return; // Something went wrong
+        if (res.type !== 'buf') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
         const data = res.data as ApiBufferResponse;
         await reply(message, {}, [{name: `result.${res.data.type}`, file: res.data.buf}]);
         
