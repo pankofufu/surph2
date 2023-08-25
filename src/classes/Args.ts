@@ -3,13 +3,13 @@ import { FlagsAndContent, getFlags } from "lib/util/flags";
 export interface BaseArgsOptions {
     content: {before: string, after?: string};
     flags?: FlagsAndContent; // use as <interface args>
-    subcommand?: string;
+    subcommand?: {name: string, alias?: string};
 }
 
 export class BaseArgs {
     content: {before: string, after?: string};
     flags?: FlagsAndContent; // use as <interface args>
-    subcommand?: string;
+    subcommand?: {name?: string, alias?: string};
 
     constructor(options: BaseArgsOptions) {
         this.content = options.content;

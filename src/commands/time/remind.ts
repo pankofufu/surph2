@@ -12,7 +12,7 @@ import { DbReminder, getUser } from "lib/util/db";
 import { Carousel } from "lib/message/modals";
 
 interface DeleteReminderArgs extends BaseArgs {
-    reminderID: string;
+    id: string | null;
 }
 
 const subcommands: SubCommand[] = [
@@ -27,10 +27,11 @@ const subcommands: SubCommand[] = [
         });
         Carousel(message, reminderEmbeds);
     }},
-    {name: 'delete', aliases: ['rm', 'del', 'remove'], async run(message, args: DeleteReminderArgs) {
-        const id = args.reminderID;
-        if (isNaN(Number(id))) { reply(message, {embed: Basic('Invalid/no reminder ID provided.', Colors.Red)}); return; };
-        if (await delReminder(message.author.id, id) === null) { reply(message, {embed: Basic('Couldn\'t find reminder by ID.', Colors.Red)}); return; };
+    {name: 'delete', aliases: ['rm', 'del', 'remove'], 
+    parseArgs(_message: Message, sliced: string) {return {id: sliced} as DeleteReminderArgs;},
+    async run(message, args: DeleteReminderArgs) {
+        if (!args.id || (args.id && args.id.length === 0)) { reply(message, {embed: Basic('No reminder ID provided.', Colors.Red)}); return; };
+        if (await delReminder(message.author.id, args.id) === null) { reply(message, {embed: Basic('Couldn\'t find reminder by ID.', Colors.Red)}); return; };
         message.addReaction('👌');
     }}
 ]
@@ -47,19 +48,20 @@ export default class RemindCommand extends Command {
     })}
 
     parseArgs(message: Message, sliced: string): ExtArgs {
-        let subcommand: string | undefined = undefined;
+        let subcommand: string | undefined;
+
         const firstArg = sliced.split(' ')[0].toLowerCase();
 
         this.subcommands?.forEach(
             sub=>{
                 if (sub.name === firstArg || sub.aliases && sub.aliases.includes(firstArg))
                 { subcommand = sub.name; return true;} else return false;
-        })
+        });
 
         const time = Time.parse(sliced);
         return {
             time: time?.timestamp || null,
-            subcommand: subcommand,
+            subcommand: {name: subcommand, alias: firstArg},
             content: {before: message.content, after: time?.clean} // use args.content.after as reminder info
         }
     }

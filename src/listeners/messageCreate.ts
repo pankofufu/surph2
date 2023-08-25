@@ -23,9 +23,11 @@ export default {
         const command = client.commands.get(q) || search(q);
         if (!command) return;
 
-        const sliced = message.content.slice( prefix.length+q.length +1 );
-        const args = command.parseArgs?.(message, sliced) || DefaultArgs(sliced);
-        const subcommand = args.subcommand ? command.subcommands?.get(args.subcommand) : undefined;
+        const sliced = message.content.slice( prefix.length+q.length ).trimStart();
+        let args = command.parseArgs?.(message, sliced) || DefaultArgs(sliced);
+        const subcommand = args.subcommand?.name ? command.subcommands?.get(args.subcommand.name) : undefined;
+        if (subcommand && args.subcommand) {
+            args = subcommand.parseArgs?.(message, (sliced.slice(args.subcommand.alias?.length || subcommand.name.length).trimStart()) ) || DefaultArgs(sliced);}
 
         try {
             const reactionTimeout = setTimeout(()=>{reaction.add(Emojis.Loading, message)}, 2000);

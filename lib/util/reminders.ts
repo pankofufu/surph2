@@ -20,6 +20,7 @@ export const delReminder = async (uid: string, mid: string): Promise<null | void
     if (!exists) return null;
     const timeout = client.timeouts.find(t => t.mid === mid) || client.timeouts.find(t => t.timestamp == Number(mid));
     if (timeout) clearTimeout(timeout.timeout);
+    else return null;
     await setUser(uid, user);
     return;
 }

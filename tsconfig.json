@@ -4,6 +4,7 @@
         "verbatimModuleSyntax": false,
         "moduleResolution": "Node16",
         "skipLibCheck": true,
+        "esModuleInterop": true,
 
         "lib": ["DOM"],
 
