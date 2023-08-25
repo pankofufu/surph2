@@ -1,13 +1,11 @@
 import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
-import { Colors, Embeds, reply } from "@surph/lib/message";
-import { hostname } from "os";
-import { client } from "../..";
+import { reply } from "@surph/lib/message";
 import { BaseArgs } from "@surph/src/classes/Args";
-import { Basic, BasicError, ErrorWithStack, OCREmbed, ShazamEmbed } from "lib/message/embeds";
+import { BasicError, ErrorWithStack, OCREmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
 import { Media, getFlags } from "lib/util/flags";
-import { APIError, OCRResult, Shazam, req } from "@surph/lib/api";
+import { APIError, OCRResult, req } from "@surph/lib/api";
 
 interface ExtFlags {
     url?: string;

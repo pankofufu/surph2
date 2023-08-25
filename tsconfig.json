@@ -1,13 +1,9 @@
 {
     "extends": "@sapphire/ts-config",
     "compilerOptions": {
-		"noUnusedLocals": false,
-		"noUnusedParameters": false,
         "verbatimModuleSyntax": false,
-		"skipLibCheck": true,
-		"strict": true,
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
+        "moduleResolution": "Node16",
+        "skipLibCheck": true,
 
         "lib": ["DOM"],
 

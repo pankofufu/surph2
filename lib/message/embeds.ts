@@ -2,7 +2,6 @@ import { Embed, User } from "eris"
 import { Colors } from "@surph/lib/message";
 import { DbReminder } from "lib/util/db";
 import { OCRResult, TranslationResult, s_Match } from "../api";
-import { ReadableStreamDefaultController } from "node:stream/web";
 
 export const Basic = (text: string, color?: Colors) => {
     return {

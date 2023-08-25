@@ -19,7 +19,7 @@ export default class YouTubeCommand extends Command {
         aliases: ['yt', 'ytsr', 'searchyt', 'ytsearch']
     })}
 
-    parseArgs(message: Message, sliced: string) {
+    parseArgs(_message: Message, sliced: string) {
         const flags: ExtFlags = Object.fromEntries(getFlags(sliced).flags);
         return {query: flags.query || sliced} as ExtArgs;
     }

@@ -39,7 +39,7 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
         const match = options.message.content.match(urlregex);
         let matchURL: string | null = null;
 
-        if (!match) return matchURL;
+        if (!match) return {url: '', replaced: content /* Nothing to replace, no matches */};
         match.every(url => { 
             options.types.every(type=>{
                 if (type.includes(path.extname(url).slice(1))) matchURL = url;

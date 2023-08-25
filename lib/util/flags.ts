@@ -31,7 +31,7 @@ export const getFlags = (content: string): FlagsAndContent => {
 
     const matches = content.matchAll(flagRegex);
     for (const match of matches) {
-        const [fullMatch, name, _value] = match;
+        const [_fullMatch, name, _value] = match;
 
         let value: string;
         if (_value.length !== 0) value = _value.replace(/^=/, '');

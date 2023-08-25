@@ -1,8 +1,6 @@
 import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
-import { Colors, Embeds, reply } from "@surph/lib/message";
-import { hostname } from "os";
-import { client } from "../..";
+import { Colors, reply } from "@surph/lib/message";
 import { BaseArgs } from "@surph/src/classes/Args";
 import { Basic, BasicError, ErrorWithStack, ShazamEmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";

@@ -1,6 +1,6 @@
 import Command from "@surph/src/classes/Commands/BaseCommand";
 import { Message } from "eris";
-import { Colors, Embeds, reply } from "@surph/lib/message";
+import { reply } from "@surph/lib/message";
 import { BaseArgs } from "@surph/src/classes/Args";
 import { getmedia } from "lib/media/message";
 import { Media } from "lib/util/flags";
@@ -52,7 +52,7 @@ export default class EditCommand extends Command {
         const res = await req('edit', {url: args.url, args: vebArgs});
         if (res.type !== 'buf') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
         const data = res.data as ApiBufferResponse;
-        await reply(message, {}, [{name: `result.${res.data.type}`, file: res.data.buf}]);
+        await reply(message, {}, [{name: `result.${data.type}`, file: data.buf}]);
         
         return;
     }

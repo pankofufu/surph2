@@ -1,8 +1,6 @@
 import Command from "@surph/src/classes/Commands/BaseCommand";
-import { Message, TextChannel } from "eris";
-import { Embeds, reply } from "@surph/lib/message";
-import { hostname } from "os";
-import { client } from "../..";
+import { Message} from "eris";
+import { reply } from "@surph/lib/message";
 import { Media, getFlags } from "lib/util/flags";
 import { BaseArgs } from "@surph/src/classes/Args";
 import { APIError, OCRResult, TranslationResult, req } from "@surph/lib/api";

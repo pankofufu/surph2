@@ -4,7 +4,6 @@ import { type Message } from "eris";
 import { Emojis, reaction } from "lib/message/emojis";
 import { client } from "..";
 import { DefaultArgs } from "../classes/Args";
-import Command from "../classes/Commands/BaseCommand";
 
 const search = (alias: string) => {
     const keyvalsearch = Array.from(client.commands).find(

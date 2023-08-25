@@ -35,9 +35,9 @@ export default class Command {
         this.timeout = options.timeout;
     }
 
-    static check(message: Message, args: BaseArgs, command: Command) {
-        /* TODO: Default before run function managing timeouts and what-not */
-    }
+    /*static check(message: Message, args: BaseArgs, command: Command) {
+        // TODO: Default before run function managing timeouts and what-not
+    }*/
 
     parseArgs?(message: Message, sliced: string): BaseArgs;
     run?(message: Message, args: BaseArgs): void | Promise<void>; // pls be true...

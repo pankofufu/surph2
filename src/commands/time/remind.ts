@@ -1,6 +1,6 @@
 //import Args from "@surph/src/classes/Args";
 import Command from "@surph/src/classes/Commands/BaseCommand";
-import { Embed, Message, TextableChannel } from "eris";
+import { Embed, Message } from "eris";
 import { Colors, reply } from "@surph/lib/message";
 import { Time } from "@surph/lib/util";
 import SubCommand from "@surph/src/classes/Commands/SubCommand";
@@ -10,7 +10,6 @@ import { inPast } from "lib/util/time";
 import { delReminder, setReminder } from "lib/util/reminders";
 import { DbReminder, getUser } from "lib/util/db";
 import { Carousel } from "lib/message/modals";
-import { DefaultArgs } from "src/classes/Args";
 
 interface DeleteReminderArgs extends BaseArgs {
     reminderID: string;
@@ -35,11 +34,6 @@ const subcommands: SubCommand[] = [
         message.addReaction('👌');
     }}
 ]
-
-interface ExtFlags {
-    time?: string;
-    info?: string; // All types have to be strings, and converted into other types in Args
-}
 
 interface ExtArgs extends BaseArgs {
     time: number | null; // timestamp
