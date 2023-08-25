@@ -57,6 +57,7 @@ export default class Surph extends Client {
 
         // Finally, start the bot
         await this.connect();
+        await this.editStatus(settings.presence.status, settings.presence.activities);
         await continueWatching(); // Reminders
     }
 
