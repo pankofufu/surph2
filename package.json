@@ -10,7 +10,6 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "@types/colors": "^1.2.1",
     "chrono-node": "^2.6.5",
     "colors": "^1.4.0",
     "eris": "^0.17.2",
@@ -18,7 +17,6 @@
     "ytsr": "^3.8.4"
   },
   "devDependencies": {
-    "@discordjs/opus": "0.5",
     "@sapphire/ts-config": "^4.0.1",
     "@types/node": "^20.5.3",
     "@types/ws": "^8.5.5",
