@@ -45,7 +45,7 @@ export default class EditCommand extends Command {
     }
 
     async run(message: Message, args: ExtArgs): Promise<void> {
-        if (!args.url || args.url === '') { reply(message, {embed: BasicError('No media to edit.')}); return; }
+        if (!args.url || args.url === '') { reply(message, {embed: BasicError('Invalid/no media to edit.')}); return; }
         const vebArgs = args.content.after;
         if (!vebArgs) { reply(message, {embed: BasicError('No args to edit media with.')}); return; }
         

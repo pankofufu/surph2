@@ -28,3 +28,8 @@ export interface TranslationResult {
     from: string;
     to: string;
 }
+
+export interface OCRResult {
+    text: string;
+    lang: string;
+}

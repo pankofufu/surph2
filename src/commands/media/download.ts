@@ -40,7 +40,7 @@ export default class DownloadCommand extends Command {
     }
 
     async run(message: Message, args: ExtArgs): Promise<void> {
-        if (!args.url) { await reply(message, {embed: BasicError('No media supplied.')}); return; }
+        if (!args.url) { await reply(message, {embed: BasicError('Invalid/no media supplied.')}); return; }
         const res = await req('download', {url: args.url, audio: (args.audio ? 1 : 0)});
         //await reply(message, {embed: ShazamEmbed(matches[0])});
         return;

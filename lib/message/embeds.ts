@@ -1,7 +1,7 @@
 import { Embed, User } from "eris"
 import { Colors } from "@surph/lib/message";
 import { DbReminder } from "lib/util/db";
-import { TranslationResult, s_Match } from "../api";
+import { OCRResult, TranslationResult, s_Match } from "../api";
 import { ReadableStreamDefaultController } from "node:stream/web";
 
 export const Basic = (text: string, color?: Colors) => {
@@ -68,5 +68,12 @@ export const TranslationEmbed = (translation: TranslationResult) => {
             {name: 'From', value: `\`${translation.from}\``, inline: true},
             {name: 'To', value: `\`${translation.to}\``, inline: true}
         ]
+    } as Embed;
+}
+export const OCREmbed = (ocr: OCRResult) => {
+    return {
+        description: `\`\`\`${ocr.text}\`\`\`\n**From** \`${ocr.lang}\``,
+        color: Colors.Green,
+        thumbnail: {url: 'https://cdn.discordapp.com/attachments/1138818819670933524/1141836922336063519/google-cloud-icon-400w.png'},
     } as Embed;
 }

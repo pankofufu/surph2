@@ -4,25 +4,24 @@ import { Colors, Embeds, reply } from "@surph/lib/message";
 import { hostname } from "os";
 import { client } from "../..";
 import { BaseArgs } from "@surph/src/classes/Args";
-import { Basic, BasicError, ShazamEmbed } from "lib/message/embeds";
+import { Basic, BasicError, OCREmbed, ShazamEmbed } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
 import { Media, getFlags } from "lib/util/flags";
-import { Shazam, req } from "@surph/lib/api";
+import { OCRResult, Shazam, req } from "@surph/lib/api";
 
 interface ExtFlags {
     url?: string;
-    offset?: string; // All types have to be strings, and converted into other types in Args
 }
 
 interface ExtArgs extends BaseArgs {
     url: string | null;
-    offset: number | null;
 }
 
-export default class ShazamCommand extends Command {
+export default class OCRCommand extends Command {
 
     constructor(){super({
-        name: 'shazam'
+        name: 'ocr',
+        aliases: ['i2t', 'scanimg', 'imagetext']
     })}
 
     parseArgs(message: Message, sliced: string) { // Remove %ping from content and then find args
@@ -30,24 +29,15 @@ export default class ShazamCommand extends Command {
 
         /* Logic to get URL from message */
         const url = flags.url || getmedia({message: message, types: [Media.Audio, Media.Video]})?.url || null;
-        /* Logic to get Shazam offset */
-        let number = Number( flags.offset || sliced.split(' ').find(word=>!isNaN(Number(word))) );
-        if (isNaN(number) || flags.offset === 'true' /* true means no value supplied */) number = 0;
 
-        const parsed: ExtArgs = { content: { before: message.content, after: sliced },
-            url: url,
-            offset: number
-         };
+        const parsed: ExtArgs = { content: { before: message.content, after: sliced }, url: url};
         return parsed;
     }
 
     async run(message: Message, args: ExtArgs): Promise<void> {
         if (!args.url) { await reply(message, {embed: BasicError('Invalid/no media supplied.')}); return; }
-        const matches = (( await req('shazam', {url: args.url})).data as Shazam).matches;
-        if (matches.length == 0 || !matches) { await reply(message, {
-            embed: Basic('No matches found.', Colors.ShazamBlue)}); return; }
-       
-        await reply(message, {embed: ShazamEmbed(matches[0])});
+        const res = (( await req('ocr', {url: args.url})).data as OCRResult);
+        await reply(message, {embed: OCREmbed(res)});
         return;
     }
 }

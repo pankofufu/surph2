@@ -25,7 +25,7 @@ export default class YouTubeCommand extends Command {
     }
 
     async run(message: Message, args: ExtArgs): Promise<void> {
-        if (!args.query) { reply(message, { embed: BasicError('No search query.') }); return; }
+        if (!args.query) { reply(message, { embed: BasicError('Invalid/no search query.') }); return; }
 
         const resp = await ytsr(args.query);
         const y = resp.items.filter((x) => x.type == 'video')[0];
