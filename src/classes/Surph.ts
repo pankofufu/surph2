@@ -33,6 +33,9 @@ export default class Surph extends Client {
     async run() {
         // You don't have to like it, but I gotta like it.
         readdirSync(`${__src}/listeners`).filter(fileFilter).forEach(async _event => {
+
+            console.log('Importing event ' + _event);
+
             let event;
             if (_event.endsWith('.js'))
                 event = (await import(`${__src}/listeners/${_event}`)).default.default as Event

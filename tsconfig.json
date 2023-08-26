@@ -2,9 +2,9 @@
     "extends": "@sapphire/ts-config",
     "compilerOptions": {
         "verbatimModuleSyntax": false,
-        "moduleResolution": "Node16",
         "skipLibCheck": true,
-        "esModuleInterop": true,
+
+        "moduleResolution": "Node",
 
         "lib": ["DOM"],
 

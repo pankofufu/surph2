@@ -41,7 +41,7 @@ export default class OCRTranslateCommand extends Command {
         if (!args.url || args.url.length === 0) { reply(message, 'Invalid/no media to OCR.'); return; }
         let ocrRes = await req('ocr', {url: args.url /* API hasn't implemented source & target lang yet */});
         if (ocrRes.type !== 'json') { reply(message, {embed: ErrorWithStack('Something went wrong.', (ocrRes.data as APIError).reason)}); return; };
-        const trRes = await req('translate', { text: (ocrRes.data as OCRResult).text, target: args.to });
+        const trRes = await req('translate', { text: (ocrRes.data as OCRResult).text, target: args.to || 'en' });
         if (trRes.type !== 'json') { reply(message, {embed: ErrorWithStack('Something went wrong.', (trRes.data as APIError).reason)}); return; };
 
 

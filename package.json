@@ -5,8 +5,7 @@
   "scripts": {
     "compile": "tsc --build --clean && tsc --build && tsc-alias",
     "prod": "yarn compile && NODE_ENV=development && node dist/src/index.js",
-    "test": "NODE_ENV=development && ts-node -r tsconfig-paths/register tests/index.ts",
-    "dev": "NODE_ENV=development && ts-node -r tsconfig-paths/register src/index.ts"
+    "dev": "NODE_ENV=development && ts-node --esm -r tsconfig-paths/register src/index.ts"
   },
   "license": "UNLICENSED",
   "dependencies": {
@@ -16,7 +15,7 @@
     "eris": "^0.17.2",
     "quick.db": "^9.1.7",
     "require-all": "^3.0.0",
-    "typescript": "^5.2.2",
+    "typescript": "5.1",
     "ytsr": "^3.8.4"
   },
   "devDependencies": {
