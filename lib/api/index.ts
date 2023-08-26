@@ -19,7 +19,7 @@ const encode = (text: string): string => {
         .map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-type Endpoints = 'shazam' | 'edit' | 'translate' | 'ocr' | 'download';
+type Endpoints = 'shazam' | 'edit' | 'translate' | 'ocr' | 'download' | 'same';
 
 export const req = async (endpoint: Endpoints, obj: object): Promise<ApiResponse> => {
     try {
