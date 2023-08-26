@@ -39,8 +39,6 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
         const match = options.message.content.match(urlregex);
         let matchURL: string | null = null;
 
-        console.log('What is happening');
-
         if (!match) return {url: '', replaced: content /* Nothing to replace, no matches */};
         match.every(url => { 
             if (options.types) options.types.every(type=>{
