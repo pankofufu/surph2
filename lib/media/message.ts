@@ -39,13 +39,15 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
         const match = options.message.content.match(urlregex);
         let matchURL: string | null = null;
 
+        console.log('What is happening');
+
         if (!match) return {url: '', replaced: content /* Nothing to replace, no matches */};
         match.every(url => { 
-            options.types.every(type=>{
+            if (options.types) options.types.every(type=>{
                 if (type.includes(path.extname(url).slice(1))) matchURL = url;
                 if (type.find( whitelisted => whitelisted.includes( new URL(url).hostname ) )) matchURL = url;
                 return true; 
-            });
+            }); else matchURL=url; // Allow URL if no media types at all
         });
         if (!matchURL) return null;
 

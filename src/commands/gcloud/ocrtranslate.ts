@@ -27,7 +27,7 @@ export default class OCRTranslateCommand extends Command {
         const flags: ExtFlags = Object.fromEntries(getFlags(sliced).flags);
 
         /* Logic to get URL from message */
-        const url = flags.url || getmedia({message: message, types: [Media.Audio, Media.Video]})?.url || null;
+        const url = flags.url || getmedia({message: message, types: [Media.Image]})?.url || null;
         /* Logic to get Shazam offset */
 
         return {
