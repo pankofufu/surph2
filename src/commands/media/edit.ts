@@ -9,13 +9,11 @@ import { getFlags } from "lib/util/flags";
 import { BasicError, ErrorWithStack } from "lib/message/embeds";
 
 interface ExtFlags {
-    media?: string; // URL will be confusing because we will be using URLs in the music= command
-    offset?: string; // All types have to be strings, and converted into other types in Args
+	url?: string;
 }
 
 interface ExtArgs extends BaseArgs {
     url: string | null;
-    offset: number | null;
 }
 
 export default class EditCommand extends Command {
@@ -33,13 +31,9 @@ export default class EditCommand extends Command {
         const mediaObj = getmedia({
             message: message, types: [Media.Audio, Media.Image, Media.Video]
         });
-        let media = flags.media || mediaObj?.url || undefined;
-        /* Logic to get Shazam offset */
-        let number = Number( flags.offset || sliced.split(' ').find(word=>!isNaN(Number(word))) );
-        if (isNaN(number) || flags.offset === 'true' /* true means no value supplied */) number = 0;
+        let media = flags.url || mediaObj?.url || undefined;
         const parsed: ExtArgs = { content: { before: message.content, after: _flags.cleaned },
             url: media || '',
-            offset: number
         };
         return parsed;
     }
