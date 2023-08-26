@@ -33,26 +33,13 @@ export default class Surph extends Client {
     async run() {
         // You don't have to like it, but I gotta like it.
         readdirSync(`${__src}/listeners`).filter(fileFilter).forEach(async _event => {
-
-            console.log('Importing event ' + _event);
-
-            let event;
-            if (_event.endsWith('.js'))
-                event = (await import(`${__src}/listeners/${_event}`)).default.default as Event
-            else
-                event = (await import(`${__src}/listeners/${_event}`)).default as Event;
+            const event = (await import(`${__src}/listeners/${_event}`)).default as Event;
             if (event.once) this.once(event.name, event.run);
             else this.on(event.name, event.run);
         });
         readdirSync(`${__src}/commands`/* Should always have subdirs */).forEach(subdir => {
             readdirSync(`${__src}/commands/${subdir}`).filter(fileFilter).forEach(async command => {
-                let CommandClass;
-
-                if (command.endsWith('.js')) 
-                    CommandClass = (await import(`${__src}/commands/${subdir}/${command}`)).default.default;
-                else
-                    CommandClass = (await import(`${__src}/commands/${subdir}/${command}`)).default;
-
+                const CommandClass = (await import(`${__src}/commands/${subdir}/${command}`)).default;
                 const initialised: Command = new CommandClass();
                 this.commands.set(initialised.name, initialised);
             });
