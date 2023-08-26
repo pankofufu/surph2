@@ -36,7 +36,7 @@ export default class SAMECommand extends Command {
         let res = await req('same', {text: args.content.after});
         if (res.type !== 'buf') return console.log((res.data as APIError).reason); // error
         const data = res.data as ApiBufferResponse;
-        await reply(message, {}, [{name: `result.${data.type}`, file: data.buf}]);
+        await reply(message, {}, [{name: `result.${data.type.replace('.', '')}`, file: data.buf}]);
 		return;
     }
 }
