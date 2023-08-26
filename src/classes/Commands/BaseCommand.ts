@@ -5,6 +5,7 @@ import SubCommand from "./SubCommand";
 export interface CommandOptions {
     name: string;
     description?: string;
+    fullDescription?: string;
     usage?: string;
     aliases?: string[];
     subcommands?: SubCommand[];
@@ -15,6 +16,7 @@ export default class Command {
 
     name: string;
     description?: string;
+    fullDescription?: string;
     usage?: string;
     aliases?: string[];
     subcommands?: Map<string, SubCommand>;

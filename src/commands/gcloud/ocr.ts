@@ -19,6 +19,8 @@ export default class OCRCommand extends Command {
 
     constructor(){super({
         name: 'ocr',
+        description: 'Scans the text from an image using Google OCR.',
+        usage: '(--url <media url>|<media>)',
         aliases: ['i2t', 'scanimg', 'imagetext']
     })}
 

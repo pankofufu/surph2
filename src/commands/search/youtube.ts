@@ -16,6 +16,9 @@ interface ExtArgs extends BaseArgs {
 export default class YouTubeCommand extends Command {
     constructor(){super({
         name: 'youtube',
+        description: 'Searches YouTube for a video.',
+        fullDescription: 'Searches YouTube for a video using the provided search query.',
+        usage: '(<search query>)',
         aliases: ['yt', 'ytsr', 'searchyt', 'ytsearch']
     })}
 

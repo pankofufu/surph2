@@ -4,5 +4,6 @@ export enum Colors {
     Yellow = 0xf5B400,
     Green = 0x00E600,
     ShazamBlue = 0x0099FF,
-    TranslationBlue = 0x4286F5
+    TranslationBlue = 0x4286F5,
+    SurphYellow = 16493145
 }

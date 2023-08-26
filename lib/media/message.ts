@@ -43,7 +43,7 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
         match.every(url => { 
             if (options.types) options.types.every(type=>{
                 if (type.includes(path.extname(url).slice(1))) matchURL = url;
-                if (type.find( whitelisted => whitelisted.includes( new URL(url).hostname ) )) matchURL = url;
+                if (type.find( whitelisted => whitelisted.includes( new URL(url).hostname.replace('www.','') ) )) matchURL = url;
                 return true; 
             }); else matchURL=url; // Allow URL if no media types at all
         });

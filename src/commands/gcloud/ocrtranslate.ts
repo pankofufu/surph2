@@ -20,6 +20,8 @@ interface ExtArgs extends BaseArgs {
 export default class OCRTranslateCommand extends Command {
     constructor(){super({
         name: 'ocrtranslate',
+        description: 'OCRs an image and then translates the text.',
+        usage: '?(--to <ISO-639 code>) (--url <media url>|<media>)',
         aliases: ['ocrtr', 'ocrgtr']
     })}
 

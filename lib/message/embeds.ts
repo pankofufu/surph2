@@ -1,7 +1,11 @@
-import { Embed, User } from "eris"
+import { Embed, EmbedField, User } from "eris"
 import { Colors } from "@surph/lib/message";
 import { DbReminder } from "lib/util/db";
 import { OCRResult, TranslationResult, s_Match } from "../api";
+import Command from "@surph/src/classes/Commands/BaseCommand";
+import { prefix } from "@surph/config";
+import { client } from "@surph/src/index";
+import npm_package from '../../package.json';
 
 export const Basic = (text: string, color?: Colors) => {
     return {
@@ -31,7 +35,7 @@ const BaseReminder = (user: User, title: string, reminder: DbReminder, color: Co
         color: color,
         url: reminder.url,
         description: `\`\`\`${reminder.info}\`\`\``,
-        footer: ((index!==undefined && total!==undefined) ? {text: `\`${index+1}\` out of \`${total}\` reminders`} : undefined), // Can't imagine codetags working in footer
+        footer: ((index!==undefined && total!==undefined) ? {text: `${index+1} out of ${total} reminders`} : undefined), // Can't imagine codetags working in footer
         fields: [
             {name: 'Timestamps', value: `**Relative:** <t:${reminder.timestamp}:R>\n**Absolute:** <t:${reminder.timestamp}:d>`,  inline: true},
             {name: 'Reminder IDs', value: `**Message:** \`${reminder.ids.msg}\`\n**Timestamp:** \`${reminder.timestamp}\``, inline: true}
@@ -74,5 +78,39 @@ export const OCREmbed = (ocr: OCRResult) => {
         description: `\`\`\`${ocr.text}\`\`\`\n**From** \`${ocr.lang}\``,
         color: Colors.Green,
         thumbnail: {url: 'https://cdn.discordapp.com/attachments/1138818819670933524/1141836922336063519/google-cloud-icon-400w.png'},
+    } as Embed;
+}
+
+export const HelpEmbed = () => {
+    let commandStrings: string[] = [];
+    client.commands.forEach(command => {
+        commandStrings.push(`**\`${prefix}${command.name}\`** - ${command.description || 'No description.'}`);
+    });
+
+    return {
+        title: "About Surph",
+        description: "**Surph is a Discord bot coded by `vvda` in their spare time.** They absolutely hate maintaining this project with a burning passion, yet they continue to do so. The bot uses Eris to communicate with Discord and is built with TypeScript, thanks to the help of many packages online.",
+        color: Colors.SurphYellow, // I forgor hex value
+        fields: [{name: "Commands", value: commandStrings.join('\n')}],
+        thumbnail: {url: 'https://cdn.discordapp.com/attachments/1021908533039599636/1145110771148275772/surp.png'},
+        footer: {text: `Version ${npm_package.version}`}
+    } as Embed;
+}
+
+export const CommandInfoEmbed = (command: Command, name?: string) => {
+    let fields: EmbedField[] = [];
+
+    if (command.usage) fields.push({name: 'Usage', value: `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``});
+    if (command.aliases) fields.push({name: 'Aliases', value: `\`\`\`${command.aliases.join(', ')}\`\`\``, inline: true});
+    if (command.subcommands) fields.push({
+        name: 'Aliases', 
+        value: `\`\`\`${Array.from(command.subcommands.keys()).join(', ')}\`\`\``, 
+        inline: true});
+
+    return {
+        title: name || command.name,
+        color: Colors.White,
+        description: command.fullDescription || command.description || 'No info is available about this command.',
+        fields: fields
     } as Embed;
 }

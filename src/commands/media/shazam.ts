@@ -20,7 +20,11 @@ interface ExtArgs extends BaseArgs {
 export default class ShazamCommand extends Command {
 
     constructor(){super({
-        name: 'shazam'
+        name: 'shazam',
+        description: 'Matches music from media using Shazam.',
+        fullDescription: 'Uses a WASM version of Shazam to match a song from video/audio.\nThanks to NULLderef for ripping the WASM and providing code that makes it usable.',
+        usage: '?(--offset <number>) (--url <media url>|<media>)',
+        aliases: ['findsong', 'songfind', 'matchsong', 'shz']
     })}
 
     parseArgs(message: Message, sliced: string) { // Remove %ping from content and then find args

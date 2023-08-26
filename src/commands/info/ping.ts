@@ -6,7 +6,9 @@ import { client } from "../..";
 
 export default class PingCommand extends Command {
     constructor(){super({
-        name: 'ping'
+        name: 'ping',
+        description: 'Shows response time from Discord\'s gateway.',
+        fullDescription: 'Responds with the latency of connection to Discord\'s gateway API, and the server the bot is currently hosted on.'
     })}
 
     run(message: Message): void | Promise<void> {

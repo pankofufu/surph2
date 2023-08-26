@@ -16,6 +16,7 @@ interface DeleteReminderArgs extends BaseArgs {
 }
 
 const subcommands: SubCommand[] = [
+
     {name: 'list', aliases: ['ls'], async run(message) {
         let reminders = (await getUser(message.author.id)).reminders;
         let reminderEmbeds: Embed[] = [];
@@ -26,14 +27,16 @@ const subcommands: SubCommand[] = [
             reminderEmbeds.push(ListReminder(message.author, reminder, index, reminders.length));
         });
         Carousel(message, reminderEmbeds);
-    }},
+    }, description: 'Lists all reminders you currently have set.'},
+
     {name: 'delete', aliases: ['rm', 'del', 'remove'], 
     parseArgs(_message: Message, sliced: string) {return {id: sliced} as DeleteReminderArgs;},
     async run(message, args: DeleteReminderArgs) {
         if (!args.id || (args.id && args.id.length === 0)) { reply(message, {embed: Basic('No reminder ID provided.', Colors.Red)}); return; };
         if (await delReminder(message.author.id, args.id) === null) { reply(message, {embed: Basic('Couldn\'t find reminder by ID.', Colors.Red)}); return; };
         message.addReaction('👌');
-    }}
+    }, description: 'Delete reminders by message ID or by timestamp.', usage: '(<message ID||timestamp>)'}
+
 ]
 
 interface ExtArgs extends BaseArgs {
@@ -43,6 +46,8 @@ interface ExtArgs extends BaseArgs {
 export default class RemindCommand extends Command {
     constructor(){super({
         name: 'remind',
+        description: 'Simple relative-time reminder utility.',
+        fullDescription: 'This was horrible to code.',
         aliases: ['reminder', 'remindme', 'alarm'],
         subcommands: subcommands
     })}

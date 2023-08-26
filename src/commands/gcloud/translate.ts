@@ -17,6 +17,8 @@ interface ExtArgs extends BaseArgs {
 export default class TranslateCommand extends Command {
     constructor(){super({
         name: 'translate',
+        description: 'Translates text using Google Translate.',
+        usage: '?(--to <ISO-639 code>) (text|<message>)',
         aliases: ['tr', 'googletranslate', 'gtr']
     })}
 

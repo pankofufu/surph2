@@ -1,6 +1,6 @@
 {
   "name": "surph",
-  "version": "3.0",
+  "version": "3.1",
   "main": "dist/run.js",
   "scripts": {
     "compile": "tsc --build --clean && tsc --build && tsc-alias",

@@ -21,6 +21,8 @@ export default class DownloadCommand extends Command {
 
     constructor(){super({
         name: 'download',
+        description: 'Downloads from sites like YouTube.',
+        usage: '?(--audio <boolean>) (--url <url>||<url>)',
         aliases: ['dl']
     })}
 
