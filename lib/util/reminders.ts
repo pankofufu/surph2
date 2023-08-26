@@ -12,16 +12,26 @@ export const setReminder = async (uid:string, reminder: DbReminder) => {
     return;
 }
 export const delReminder = async (uid: string, mid: string): Promise<null | void> => {
+    console.log( await pullDB() )
     const user = await getUser(uid);
     const exists = user.reminders.every((r, i) => {
-        if ( r.ids.msg === mid || r.timestamp === Number(mid) ) {user.reminders.splice(i, 1); return true;}
+	console.log(`Stored mID: ${r.ids.msg}\nStored timestamp: ${typeof r.timestamp} ${r.timestamp}\nGiven mID: ${typeof mid} ${mid}\nReminder index: ${i}/${user.reminders.length}`);
+        console.log(r.ids.msg === mid, r.timestamp === Number(mid));
+	if ( 
+	    r.ids.msg === mid || 
+	    r.timestamp === Number(mid) ) {
+		    user.reminders = user.reminders.filter((reminder) => reminder.ids.msg !== mid || reminder.timestamp == Number(mid)); 
+		    return true;
+	    }
         else return false;
     });
     if (!exists) return null;
+
     const timeout = client.timeouts.find(t => t.mid === mid) || client.timeouts.find(t => t.timestamp == Number(mid));
     if (timeout) clearTimeout(timeout.timeout);
-    else return null;
+
     await setUser(uid, user);
+    console.log('Done deleting reminder here')
     return;
 }
 

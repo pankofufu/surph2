@@ -5,7 +5,7 @@
   "scripts": {
     "compile": "tsc --build --clean && tsc --build && tsc-alias",
     "prod": "yarn compile && NODE_ENV=development && node dist/src/index.js",
-    "dev": "NODE_ENV=development && ts-node --esm -r tsconfig-paths/register src/index.ts"
+    "dev": "NODE_ENV=development && ts-node -r tsconfig-paths/register src/index.ts"
   },
   "license": "UNLICENSED",
   "dependencies": {
