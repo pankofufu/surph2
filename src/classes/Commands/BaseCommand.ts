@@ -25,6 +25,7 @@ export default class Command {
     constructor(options: CommandOptions) {
         this.name = options.name;
         this.description = options.description;
+        this.fullDescription = options.fullDescription;
         this.usage = options.usage;
         this.aliases = options.aliases;
 
