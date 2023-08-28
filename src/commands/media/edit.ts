@@ -21,7 +21,7 @@ export default class EditCommand extends Command {
     constructor(){super({
         name: 'edit',
         description: 'Edits videos using VEB-like syntax.',
-        fullDescription: 'Edits videos using VideoEditBot syntax. Thanks to Ganer for original VideoEditBot code.\nYou can see a list of VEB commands [here](https://github.com/GanerCodes/videoEditBot/blob/dev/COMMANDS.md).',
+        fullDescription: 'Edits videos using VideoEditBot syntax.\nThanks to Ganer for original VideoEditBot code.\nYou can see a list of VEB commands [here](https://github.com/GanerCodes/videoEditBot/blob/dev/COMMANDS.md).',
         usage: '(--url <media url>|<media>) (<VideoEditBot args>)',
         aliases: ['destroy', 'veb', 'editvid', 'editvideo']
     })}

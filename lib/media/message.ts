@@ -27,11 +27,14 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
     if (options.content) content = options.content;
     else content = options.message.content;
 
+    console.log(options.fromReference);
+
     const ref = getrefmsg(options.message);
     if (ref && !options.fromReference) { 
         const _options = options; 
-        _options.message = ref; 
-        return getmedia(_options) 
+        _options.message = ref;
+        _options.fromReference = true;
+        return getmedia(_options);
     }
     if (options.message.attachments.length !== 0) 
         res = {url: options.message.attachments[0].url, replaced: content};
