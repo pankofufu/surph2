@@ -6,6 +6,7 @@ import { BaseArgs } from "@surph/src/classes/Args";
 
 import { ApiBufferResponse, APIError, req } from "@surph/lib/api";
 import { ErrorWithStack } from "lib/message/embeds";
+import { now } from "lib/util/time";
 
 
 export default class SAMECommand extends Command {
@@ -34,7 +35,7 @@ export default class SAMECommand extends Command {
         let res = await req('same', {text: args.content.after});
         if (res.type !== 'buf') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
         const data = res.data as ApiBufferResponse;
-        await reply(message, {}, [{name: `result.${data.type.replace('.', '')}`, file: data.buf}]);
+        await reply(message, {}, [{name: `${now().toString()}${res.data.type}`, file: data.buf}]);
 		return;
     }
 }

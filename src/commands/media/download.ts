@@ -6,6 +6,7 @@ import { BasicError, ErrorWithStack } from "lib/message/embeds";
 import { getmedia } from "lib/media/message";
 import { _Text, getFlags } from "lib/util/flags";
 import { APIError, req } from "@surph/lib/api";
+import { now } from "lib/util/time";
 
 interface ExtFlags {
     url?: string;
@@ -43,7 +44,7 @@ export default class DownloadCommand extends Command {
         if (!args.url) { await reply(message, {embed: BasicError('Invalid/no media supplied.')}); return; }
         const res = await req('download', {url: args.url, audio: (args.audio ? 1 : 0)});
         if (res.type !== 'buf') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
-        await reply(message, {}, [{name: `result.${res.data.type}`, file: res.data.buf}]);
+        await reply(message, {}, [{name: `${now().toString()}${res.data.type}`, file: res.data.buf}]);
         return;
     }
 }

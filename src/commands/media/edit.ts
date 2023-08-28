@@ -7,6 +7,7 @@ import { Media } from "lib/util/flags";
 import { APIError, ApiBufferResponse, req } from "@surph/lib/api";
 import { getFlags } from "lib/util/flags";
 import { BasicError, ErrorWithStack } from "lib/message/embeds";
+import { now } from "lib/util/time";
 
 interface ExtFlags {
 	url?: string;
@@ -49,7 +50,7 @@ export default class EditCommand extends Command {
         const res = await req('edit', {url: args.url, args: vebArgs});
         if (res.type !== 'buf') { reply(message, {embed: ErrorWithStack('Something went wrong.', (res.data as APIError).reason)}); return; };
         const data = res.data as ApiBufferResponse;
-        await reply(message, {}, [{name: `result.${data.type}`, file: data.buf}]);
+        await reply(message, {}, [{name: `${now().toString()}${res.data.type}`, file: data.buf}]);
         
         return;
     }
