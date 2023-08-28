@@ -4,6 +4,7 @@ import { type Message } from "eris";
 import { Emojis, reaction } from "lib/message/emojis";
 import { client } from "..";
 import { DefaultArgs } from "../classes/Args";
+import { print } from "lib/util/logger";
 
 const search = (alias: string) => {
     const keyvalsearch = Array.from(client.commands).find(
@@ -22,6 +23,8 @@ export default {
 
         const command = client.commands.get(q) || search(q);
         if (!command) return;
+        
+        print.info(`Command issued: ${prefix}${command.name} - issued by ${message.author.username}`);
 
         const sliced = message.content.slice( prefix.length+q.length ).trimStart();
         let args = command.parseArgs?.(message, sliced) || DefaultArgs(sliced);

@@ -3,7 +3,7 @@ import { readdirSync } from "fs";
 import { settings, token } from "@surph/config";  
 import type Command from "@surph/src/classes/Commands/BaseCommand";
 import type Event from "@surph/src/classes/Event";
-import { __src } from "@surph/lib/util";
+import { __src, print } from "@surph/lib/util";
 import { Modals } from "@surph/lib/message";
 import { ReminderTimeout, continueWatching } from "lib/util/reminders";
 
@@ -47,8 +47,9 @@ export default class Surph extends Client {
 
         // Finally, start the bot
         await this.connect();
-        await this.editStatus(settings.presence.status, settings.presence.activities);
+        this.editStatus(settings.presence.status, settings.presence.activities);
         await continueWatching(); // Reminders
+        print.success(`Surph - polling ${this.timeouts.length} reminders in ${this.guilds.size} servers`);
     }
 
 }
