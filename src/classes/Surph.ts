@@ -6,6 +6,7 @@ import type Event from "@surph/src/classes/Event";
 import { __src, print } from "@surph/lib/util";
 import { Modals } from "@surph/lib/message";
 import { ReminderTimeout, continueWatching } from "lib/util/reminders";
+import { TrackedCommand } from "@surph/lib/util";
 
 const fileFilter = (file: string) => {
     if (
@@ -24,10 +25,12 @@ export default class Surph extends Client {
     carousels: Array<Modals.ActiveCarousel> = [];
     dialogs: Array<Modals.ActiveDialog> = [];
     timeouts: Array<ReminderTimeout> = [];
+    cooldowns: TrackedCommand[];
 
     constructor() {
         super(`Bot ${token}`, settings.client);
         this.commands = new Map();
+        this.cooldowns = [];
     }
 
     async run() {

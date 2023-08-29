@@ -1,6 +1,7 @@
 import type { Message } from "eris";
 import {BaseArgs} from "../Args";
 import SubCommand from "./SubCommand";
+import { settings } from "@surph/config";
 
 export interface CommandOptions {
     name: string;
@@ -21,6 +22,7 @@ export default class Command {
     aliases?: string[];
     subcommands?: Map<string, SubCommand>;
     timeout?: number;
+    
 
     constructor(options: CommandOptions) {
         this.name = options.name;
@@ -29,13 +31,12 @@ export default class Command {
         this.usage = options.usage;
         this.aliases = options.aliases;
 
-
+        this.timeout = options.timeout || settings.defaultTimeout;
 
         if (options.subcommands) { this.subcommands = new Map();
         options.subcommands.forEach((subcommand: SubCommand) => 
             this.subcommands?.set(subcommand.name, subcommand));
         }
-        this.timeout = options.timeout;
     }
 
     /*static check(message: Message, args: BaseArgs, command: Command) {
