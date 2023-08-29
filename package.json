@@ -4,8 +4,8 @@
   "main": "dist/run.js",
   "scripts": {
     "compile": "tsc --build --clean && tsc --build && tsc-alias",
-    "prod": "yarn compile && NODE_ENV=development && node dist/src/index.js",
-    "dev": "NODE_ENV=development && ts-node -r tsconfig-paths/register src/index.ts"
+    "prod": "yarn compile && NODE_ENV=production node dist/src/index.js",
+    "dev": "NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts"
   },
   "license": "UNLICENSED",
   "dependencies": {

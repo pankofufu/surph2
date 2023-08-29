@@ -1,6 +1,7 @@
 import { Message } from "eris";
 import { MediaSubType } from "lib/util/flags";
 import path from "path";
+import { print } from "../util";
 
 const getrefmsg = (msg: Message) => {
     if (!msg.referencedMessage) return null;
@@ -22,12 +23,10 @@ interface GetMediaOptions {
 }
 
 export const getmedia = (options: GetMediaOptions): Media | null => {
-    let res: Media;
+    let res: Media | null = null;
     let content: string;
     if (options.content) content = options.content;
     else content = options.message.content;
-
-    console.log(options.fromReference);
 
     const ref = getrefmsg(options.message);
     if (ref && !options.fromReference) { 
@@ -36,13 +35,22 @@ export const getmedia = (options: GetMediaOptions): Media | null => {
         _options.fromReference = true;
         return getmedia(_options);
     }
-    if (options.message.attachments.length !== 0) 
-        res = {url: options.message.attachments[0].url, replaced: content};
+    if (options.message.attachments.length !== 0) {
+        const url = options.message.attachments[0].url;
+        print.info(`Validating ${url} from attachment`);
+        let match: string;
+        if (options.types) options.types.every(type=>{
+            if (type.includes(path.extname(url).slice(1))) match = url;
+            if (type.find( whitelisted => whitelisted.includes( new URL(url).hostname.replace('www.','') ) )) match = url;
+            res = {url: match, replaced: content};
+            return true; 
+        }); else res = null;// Allow URL if no media types at all
+    }
     else {
         const match = options.message.content.match(urlregex);
         let matchURL: string | null = null;
-
         if (!match) return {url: '', replaced: content /* Nothing to replace, no matches */};
+        print.info(`Validating ${match} from message content`);
         match.every(url => { 
             if (options.types) options.types.every(type=>{
                 if (type.includes(path.extname(url).slice(1))) matchURL = url;
