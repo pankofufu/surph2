@@ -85,7 +85,7 @@ export default {
 		try {
 			const reactionTimeout = setTimeout(() => {
 				reaction.add(Emojis.Loading, message);
-			}, 2000);
+			}, 1000);
 			if (subcommand && subcommand.run)
 				await subcommand.run(message, args);
 			else if (command.run) await command.run(message, args);
