@@ -49,7 +49,7 @@ export default class Surph extends Client {
         await this.connect();
         this.editStatus(settings.presence.status, settings.presence.activities);
         await continueWatching(); // Reminders
-        print.success(`Surph - polling ${this.timeouts.length} reminders in ${this.guilds.size} servers`);
+        print.success(`Started the bot`);
     }
 
 }
