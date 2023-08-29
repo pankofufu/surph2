@@ -4,6 +4,7 @@ import { Message } from 'eris';
 
 import { BasicError, ErrorWithStack } from 'lib/message/embeds';
 import { Emojis, reaction } from 'lib/message/emojis';
+import { escape } from 'lib/message/markdown';
 import { reply } from 'lib/message/util';
 
 import { getCooldown, leaseCooldown, setCooldown } from 'lib/util/cooldown';
@@ -14,7 +15,6 @@ import { now } from 'lib/util/time';
 import { client } from 'src';
 import { DefaultArgs } from 'src/classes/Args';
 import Event from 'src/classes/Event';
-
 
 
 export default {
@@ -52,7 +52,7 @@ export default {
 					embed: BasicError(
 						`This command is on cooldown.${
 							cooldown.finishedAt
-								? `\nPlease wait ${timeLeft} seconds to use this command again.`
+								? `\nPlease wait ${timeLeft+1} seconds to use this command again.`
 								: ``
 						}`,
 					),
@@ -63,7 +63,8 @@ export default {
 		const sliced = message.content
 			.slice(prefix.length + q.length)
 			.trimStart();
-		let args = command.parseArgs?.(message, sliced) || DefaultArgs(sliced);
+		
+		let args = command.parseArgs?.(message, escape.all(sliced)) || DefaultArgs(escape.all(sliced));
 		const subcommand = args.subcommand?.name
 			? command.subcommands?.get(args.subcommand.name)
 			: undefined;
@@ -71,17 +72,16 @@ export default {
 			args =
 				subcommand.parseArgs?.(
 					message,
-					sliced
+					escape.all( sliced
 						.slice(
 							args.subcommand.alias?.length ||
 								subcommand.name.length,
 						)
-						.trimStart(),
-				) || DefaultArgs(sliced);
+						.trimStart() ),
+				) || DefaultArgs(escape.all(sliced));
 		}
 
 		setCooldown(message, command);
-		console.log('Added cooldown');
 		try {
 			const reactionTimeout = setTimeout(() => {
 				reaction.add(Emojis.Loading, message);

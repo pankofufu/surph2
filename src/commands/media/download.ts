@@ -51,7 +51,7 @@ export default class DownloadCommand extends Command {
 
 	async run(message: Message, args: ExtArgs): Promise<void> {
 		if (!args.url) {
-			await reply(message, {
+			reply(message, {
 				embed: BasicError('Invalid/no media supplied.'),
 			});
 			return;
@@ -69,7 +69,7 @@ export default class DownloadCommand extends Command {
 			});
 			return;
 		}
-		await reply(message, {}, [
+		reply(message, {}, [
 			{ name: `${now().toString()}${res.data.type}`, file: res.data.buf },
 		]);
 		return;

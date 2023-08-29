@@ -67,7 +67,7 @@ export default class ShazamCommand extends Command {
 
 	async run(message: Message, args: ExtArgs): Promise<void> {
 		if (!args.url) {
-			await reply(message, {
+			reply(message, {
 				embed: BasicError('Invalid/no media supplied.'),
 			});
 			return;
@@ -84,13 +84,13 @@ export default class ShazamCommand extends Command {
 		}
 		const matches = (res.data as Shazam).matches;
 		if (!matches || (matches && matches.length == 0)) {
-			await reply(message, {
+			reply(message, {
 				embed: Basic('No matches found.', Colors.ShazamBlue),
 			});
 			return;
 		}
 
-		await reply(message, { embed: ShazamEmbed(matches[0]) });
+		reply(message, { embed: ShazamEmbed(matches[0]) });
 		return;
 	}
 }

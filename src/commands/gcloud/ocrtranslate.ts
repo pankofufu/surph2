@@ -80,7 +80,7 @@ export default class OCRTranslateCommand extends Command {
 
 		const translation = trRes.data as TranslationResult;
 		translation.from = (ocrRes.data as OCRResult).lang;
-		await reply(message, { embed: TranslationEmbed(translation) });
+		reply(message, { embed: TranslationEmbed(translation) });
 
 		return;
 	}

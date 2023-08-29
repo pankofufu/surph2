@@ -49,7 +49,7 @@ export default class SAMECommand extends Command {
 			return;
 		}
 		const data = res.data as ApiBufferResponse;
-		await reply(message, {}, [
+		reply(message, {}, [
 			{ name: `${now().toString()}${res.data.type}`, file: data.buf },
 		]);
 		return;

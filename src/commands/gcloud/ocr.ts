@@ -47,7 +47,7 @@ export default class OCRCommand extends Command {
 
 	async run(message: Message, args: ExtArgs): Promise<void> {
 		if (!args.url) {
-			await reply(message, {
+			reply(message, {
 				embed: BasicError('Invalid/no media supplied.'),
 			});
 			return;
@@ -63,7 +63,7 @@ export default class OCRCommand extends Command {
 			return;
 		}
 		const res = apiReq.data as OCRResult;
-		await reply(message, { embed: OCREmbed(res) });
+		reply(message, { embed: OCREmbed(res) });
 		return;
 	}
 }

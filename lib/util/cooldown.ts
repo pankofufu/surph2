@@ -2,6 +2,7 @@ import { settings } from 'config';
 
 import { Guild, Message } from 'eris';
 
+import { print } from './logger';
 import { now } from './time';
 
 import { client } from 'src';
@@ -28,15 +29,19 @@ export const setCooldown = (message: Message, command: Command) => {
 };
 
 export const leaseCooldown = (id: string) => {
-	const index = client.cooldowns.findIndex((x) => id === x.message.id);
+	let index = client.cooldowns.findIndex((x) => id === x.message.id);
 	const cooldown = client.cooldowns.find((x) => id === x.message.id);
-
-	if (isNaN(index) || !cooldown) return;
+	
+	if (isNaN(index) || !cooldown) return print.info('Tried leasing non-existant cooldown');
 
 	cooldown.finishedAt = now();
+	cooldown.running = false;
 	client.cooldowns[index] = cooldown;
+
 	setTimeout(
 		() => {
+			let index = client.cooldowns.findIndex((x) => id === x.message.id); // Update in case high activity
+			if (isNaN(index)) return;
 			client.cooldowns.splice(index, 1);
 		},
 		(cooldown.command.timeout || settings.defaultTimeout) * 1000,

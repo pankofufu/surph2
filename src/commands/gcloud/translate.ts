@@ -52,7 +52,7 @@ export default class TranslateCommand extends Command {
 		});
 		if (res.type !== 'json') return; // error
 		const translation = res.data as TranslationResult;
-		await reply(message, { embed: TranslationEmbed(translation) });
+		reply(message, { embed: TranslationEmbed(translation) });
 		return;
 	}
 }

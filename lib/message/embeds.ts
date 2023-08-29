@@ -171,3 +171,13 @@ export const CommandInfoEmbed = (command: Command, name?: string) => {
 		fields: fields,
 	} as Embed;
 };
+
+export const HexEmbed = (text: string) => {
+	return {
+		description: `\`\`\`${text}\`\`\``,
+		color: Colors.White,
+		thumbnail: {
+			url: 'https://cdn.discordapp.com/attachments/1138818819670933524/1146179020732502156/hex.png',
+		},
+	} as Embed;
+};
