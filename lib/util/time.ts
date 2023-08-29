@@ -1,5 +1,6 @@
 import * as chrono from 'chrono-node';
 
+
 export const r2s = (num: number) => Math.floor(num / 1000); // ms timestamp -> s timestamp
 export const now = () =>
 	r2s(Math.floor(performance.timeOrigin + performance.now()));

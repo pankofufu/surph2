@@ -1,10 +1,13 @@
-import Command from '@surph/src/classes/Commands/BaseCommand';
 import { Message } from 'eris';
-import { reply } from '@surph/lib/message';
-import { getFlags } from 'lib/util/flags';
-import { BaseArgs } from '@surph/src/classes/Args';
-import { TranslationResult, req } from '@surph/lib/api';
+
+import { TranslationResult, req } from 'lib/api';
+import { reply } from 'lib/message';
 import { TranslationEmbed } from 'lib/message/embeds';
+import { getFlags } from 'lib/util/flags';
+
+import { BaseArgs } from 'src/classes/Args';
+import Command from 'src/classes/Commands/BaseCommand';
+
 
 interface ExtFlags {
 	to?: string;

@@ -1,8 +1,12 @@
+import { settings } from 'config';
+
 import { Guild, Message } from 'eris';
-import Command from '@surph/src/classes/Commands/BaseCommand';
-import { client } from '@surph/src/index';
-import { settings } from '@surph/config';
+
 import { now } from './time';
+
+import { client } from 'src';
+import Command from 'src/classes/Commands/BaseCommand';
+
 
 export interface TrackedCommand {
 	command: Command;

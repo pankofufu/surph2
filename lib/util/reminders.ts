@@ -1,8 +1,10 @@
 import { DbReminder, getUser, pullDB, setUser } from './db';
 import { reply } from '../message';
-import { client } from '@surph/src/index';
-import { inPast, now } from './time';
 import { DueReminder } from 'lib/message/embeds';
+import { inPast, now } from './time';
+
+import { client } from 'src';
+
 
 export const setReminder = async (uid: string, reminder: DbReminder) => {
 	const user = await getUser(uid);

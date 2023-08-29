@@ -1,10 +1,14 @@
-import Command from '@surph/src/classes/Commands/BaseCommand';
 import { Message } from 'eris';
-import { reply } from '@surph/lib/message';
-import ytsr from 'ytsr';
+
+import { reply } from 'lib/message';
 import { BasicError } from 'lib/message/embeds';
-import { BaseArgs } from '@surph/src/classes/Args';
 import { getFlags } from 'lib/util/flags';
+
+import { BaseArgs } from 'src/classes/Args';
+import Command from 'src/classes/Commands/BaseCommand';
+
+import ytsr from 'ytsr';
+
 
 interface ExtFlags {
 	query?: string;

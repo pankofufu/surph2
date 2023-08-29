@@ -1,7 +1,10 @@
 import { Message } from 'eris';
+
+import { print } from 'lib/util';
 import { MediaSubType } from 'lib/util/flags';
+
 import path from 'path';
-import { print } from '../util';
+
 
 const getrefmsg = (msg: Message) => {
 	if (!msg.referencedMessage) return null;

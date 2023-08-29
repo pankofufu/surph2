@@ -1,4 +1,6 @@
-import { client } from '@surph/src/index';
+import { client } from 'src';
+
+
 export const search = (alias: string) => {
 	const keyvalsearch = Array.from(client.commands).find(
 		(keyval) => keyval[1].aliases && keyval[1].aliases.includes(alias),

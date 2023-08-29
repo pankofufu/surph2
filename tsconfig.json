@@ -5,22 +5,11 @@
 		"skipLibCheck": true,
 
 		"moduleResolution": "Node",
-
 		"lib": ["DOM"],
 
 		"baseUrl": ".",
 		"outDir": "dist",
-		"paths": {
-			"@surph/src/*": ["src/*"],
-			"@surph/src": ["src/index.ts"],
-
-			"@surph/lib/api": ["lib/api/index.ts"],
-			"@surph/lib/util": ["lib/util/index.ts"],
-			"@surph/lib/media": ["lib/media/index.ts"],
-			"@surph/lib/message": ["lib/message/index.ts"],
-
-			"@surph/config": ["config.ts"]
-		}
+		"paths": {"config": ["config.ts"]}
 	},
 	"include": ["src/**/*", "lib/**/*", "tests/**/*"],
 	"exclude": [

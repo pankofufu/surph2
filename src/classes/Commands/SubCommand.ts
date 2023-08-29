@@ -1,4 +1,5 @@
-import type { Message } from 'eris';
+import { Message } from 'eris';
+
 import { BaseArgs } from '../Args';
 import Command, { CommandOptions } from './BaseCommand';
 

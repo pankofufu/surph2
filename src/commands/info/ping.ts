@@ -1,8 +1,12 @@
-import Command from '@surph/src/classes/Commands/BaseCommand';
+
 import { Message } from 'eris';
-import { Embeds, reply } from '@surph/lib/message';
+
+import { Embeds, reply } from 'lib/message';
+
+import { client } from 'src';
+import Command from 'src/classes/Commands/BaseCommand';
+
 import { hostname } from 'os';
-import { client } from '../..';
 
 export default class PingCommand extends Command {
 	constructor() {

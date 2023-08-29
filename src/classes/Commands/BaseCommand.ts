@@ -1,7 +1,10 @@
-import type { Message } from 'eris';
+import { settings } from 'config';
+
+import { Message } from 'eris';
+
 import { BaseArgs } from '../Args';
 import SubCommand from './SubCommand';
-import { settings } from '@surph/config';
+
 
 export interface CommandOptions {
 	name: string;

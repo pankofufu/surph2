@@ -1,5 +1,7 @@
-import { client } from '@surph/src/index';
 import { Message } from 'eris';
+
+import { client } from 'src';
+
 
 export enum Emojis {
 	Loading = 'loading:1081977500319613039',

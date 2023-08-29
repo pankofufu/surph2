@@ -1,6 +1,9 @@
 import { ActionRow, ComponentInteraction, Embed, Message } from 'eris';
+
 import { reply } from '../index';
-import { client } from '@surph/src/index';
+
+import { client } from 'src';
+
 
 export const DialogComponents = (disabled: boolean): ActionRow => {
 	return {

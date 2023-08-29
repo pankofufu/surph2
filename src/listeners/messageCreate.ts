@@ -1,15 +1,22 @@
-import { prefix, settings } from '@surph/config';
-import type Event from '@surph/src/classes/Event';
-import { type Message } from 'eris';
-import { Emojis, reaction } from 'lib/message/emojis';
-import { client } from '..';
-import { DefaultArgs } from '../classes/Args';
-import { print } from 'lib/util/logger';
-import { reply } from 'lib/message/util';
+import { prefix, settings } from 'config';
+
+import { Message } from 'eris';
+
 import { BasicError, ErrorWithStack } from 'lib/message/embeds';
+import { Emojis, reaction } from 'lib/message/emojis';
+import { reply } from 'lib/message/util';
+
 import { getCooldown, leaseCooldown, setCooldown } from 'lib/util/cooldown';
-import { now } from 'lib/util/time';
+import { print } from 'lib/util/logger';
 import { search } from 'lib/util/search';
+import { now } from 'lib/util/time';
+
+import { client } from 'src';
+import { DefaultArgs } from 'src/classes/Args';
+import Event from 'src/classes/Event';
+
+
+
 export default {
 	name: 'messageCreate',
 	async run(message: Message) {

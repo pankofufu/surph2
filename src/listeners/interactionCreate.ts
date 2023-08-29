@@ -1,7 +1,9 @@
-import type Event from '@surph/src/classes/Event';
-import type { ComponentInteraction, AnyInteraction } from 'eris';
-import { client } from '..';
-import { Modals } from '@surph/lib/message';
+import { ComponentInteraction, AnyInteraction } from 'eris';
+
+import { Modals } from 'lib/message';
+
+import { client } from 'src';
+import Event from 'src/classes/Event';
 
 interface InteractionData {
 	custom_id: string;

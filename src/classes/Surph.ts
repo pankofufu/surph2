@@ -1,12 +1,15 @@
+import { settings, token } from 'config';
+
 import { Client } from 'eris';
 import { readdirSync } from 'fs';
-import { settings, token } from '@surph/config';
-import type Command from '@surph/src/classes/Commands/BaseCommand';
-import type Event from '@surph/src/classes/Event';
-import { __src, print } from '@surph/lib/util';
-import { Modals } from '@surph/lib/message';
+
+import { Modals } from 'lib/message';
 import { ReminderTimeout, continueWatching } from 'lib/util/reminders';
-import { TrackedCommand } from '@surph/lib/util';
+import { __src, print, TrackedCommand } from 'lib/util';
+
+import type Command from 'src/classes/Commands/BaseCommand';
+import type Event from 'src/classes/Event';
+
 
 const fileFilter = (file: string) => {
 	if (file.endsWith('.map') || file.endsWith('.d.ts')) return false;

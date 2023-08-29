@@ -1,10 +1,7 @@
-/* TODO
-   - Make Response class. Has property 'type' that defines what values you get back.
-   - Type is JSON, you get a JSON back. Type is media, you get media back.
-   - Use flags to figure out what you're expecting from user, and what you're sending to server.
-*/
-import { api } from '@surph/config';
+import { api } from 'config';
+
 import path from 'path';
+
 
 type ApiResponseType = 'buf' | 'json' | 'err';
 type ApiResponseDataType = Record<string, any> | ApiBufferResponse;

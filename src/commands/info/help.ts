@@ -1,10 +1,13 @@
-import { BaseArgs } from '@surph/src/classes/Args';
-import Command from '@surph/src/classes/Commands/BaseCommand';
+
 import { Message } from 'eris';
-import { reply } from 'lib/message/util';
-import { client } from '../..';
+
 import { BasicError, CommandInfoEmbed, HelpEmbed } from 'lib/message/embeds';
+import { reply } from 'lib/message/util';
 import { search } from 'lib/util/search';
+
+import { client } from 'src';
+import { BaseArgs } from 'src/classes/Args';
+import Command from 'src/classes/Commands/BaseCommand';
 
 interface HelpArgs extends BaseArgs {
 	command?: string;
@@ -52,7 +55,8 @@ export default class HelpCommand extends Command {
 				if (!subcommand)
 					reply(message, {
 						embed: CommandInfoEmbed(command),
-					}); // Just give base command info
+					});
+				// Just give base command info
 				else
 					reply(message, {
 						embed: CommandInfoEmbed(

@@ -1,12 +1,13 @@
-import Command from '@surph/src/classes/Commands/BaseCommand';
 import { Message } from 'eris';
-import { reply } from '@surph/lib/message';
-import { getFlags } from 'lib/util/flags';
-import { BaseArgs } from '@surph/src/classes/Args';
 
-import { ApiBufferResponse, APIError, req } from '@surph/lib/api';
+import { ApiBufferResponse, APIError, req } from 'lib/api';
+import { reply } from 'lib/message';
 import { ErrorWithStack } from 'lib/message/embeds';
+import { getFlags } from 'lib/util/flags';
 import { now } from 'lib/util/time';
+
+import { BaseArgs } from 'src/classes/Args';
+import Command from 'src/classes/Commands/BaseCommand';
 
 export default class SAMECommand extends Command {
 	constructor() {

@@ -1,11 +1,16 @@
+import { prefix } from 'config';
+
 import { Embed, EmbedField, User } from 'eris';
-import { Colors } from '@surph/lib/message';
-import { DbReminder } from 'lib/util/db';
+
 import { OCRResult, TranslationResult, s_Match } from '../api';
-import Command from '@surph/src/classes/Commands/BaseCommand';
-import { prefix } from '@surph/config';
-import { client } from '@surph/src/index';
+import { Colors } from 'lib/message';
+import { DbReminder } from 'lib/util/db';
+
+import { client } from 'src';
+import Command from 'src/classes/Commands/BaseCommand';
+
 import npm_package from '../../package.json';
+
 
 export const Basic = (text: string, color?: Colors) => {
 	return {

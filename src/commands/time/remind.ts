@@ -1,15 +1,17 @@
-//import Args from "@surph/src/classes/Args";
-import Command from '@surph/src/classes/Commands/BaseCommand';
 import { Embed, Message } from 'eris';
-import { Colors, reply } from '@surph/lib/message';
-import { Time } from '@surph/lib/util';
-import SubCommand from '@surph/src/classes/Commands/SubCommand';
-import { BaseArgs } from '@surph/src/classes/Args';
+
+import { Colors, reply } from 'lib/message';
 import { Basic, ListReminder, SetReminder } from 'lib/message/embeds';
-import { inPast } from 'lib/util/time';
-import { delReminder, setReminder } from 'lib/util/reminders';
-import { DbReminder, getUser } from 'lib/util/db';
 import { Carousel } from 'lib/message/modals';
+import { Time } from 'lib/util';
+import { DbReminder, getUser } from 'lib/util/db';
+import { delReminder, setReminder } from 'lib/util/reminders';
+import { inPast } from 'lib/util/time';
+
+import { BaseArgs } from 'src/classes/Args';
+import Command from 'src/classes/Commands/BaseCommand';
+import SubCommand from 'src/classes/Commands/SubCommand';
+
 
 interface DeleteReminderArgs extends BaseArgs {
 	id: string | null;

@@ -1,4 +1,4 @@
-import type Eris from 'eris';
+import Eris from 'eris';
 
 export default interface Event {
 	name: keyof Eris.ClientEvents;
