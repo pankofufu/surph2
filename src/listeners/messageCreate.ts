@@ -26,7 +26,8 @@ export default {
         const cooldown = getCooldown(message, command);
         if (cooldown) {
             const timeLeft = Math.max(0, (command.timeout || settings.defaultTimeout) - (now() - (cooldown.finishedAt || now())));
-            reply(message, { embed: BasicError(`This command is on cooldown.${cooldown.finishedAt ? `\nPlease wait ${timeLeft} seconds to use this command again.` : ``}`) })
+            if (cooldown.running) reply(message, { embed: BasicError(`This command is currently running.\nSee: ${cooldown.message.jumpLink}`) });
+            else reply(message, { embed: BasicError(`This command is on cooldown.${cooldown.finishedAt ? `\nPlease wait ${timeLeft} seconds to use this command again.` : ``}`) })
             return;
         }
 
