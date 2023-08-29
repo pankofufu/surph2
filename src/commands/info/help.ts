@@ -1,18 +1,27 @@
 
 import { Message } from 'eris';
 
-import { BasicError, CommandInfoEmbed, HelpEmbed } from 'lib/message/embeds';
+import { BasicError, CommandInfoEmbed, HelpEmbed, HelpSyntaxEmbed } from 'lib/message/embeds';
 import { reply } from 'lib/message/util';
 import { search } from 'lib/util/search';
 
 import { client } from 'src';
 import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';
+import SubCommand from 'src/classes/Commands/SubCommand';
 
 interface HelpArgs extends BaseArgs {
 	command?: string;
 	_subcommand?: string;
 }
+
+const subcommands: SubCommand[] = [
+	{
+		name: 'syntax',
+		aliases: ['syn'],
+		description: 'Posts information on how to understand command usage syntax.'
+	}
+];
 
 export default class HelpCommand extends Command {
 	constructor() {
@@ -23,6 +32,7 @@ export default class HelpCommand extends Command {
 				'Tells you about the bot and lists all the commands it currently has available.',
 			usage: '?(<command name>) ?(<subcommand name>)',
 			aliases: ['about'],
+			subcommands: subcommands
 		});
 	}
 
@@ -41,7 +51,13 @@ export default class HelpCommand extends Command {
 		if (args.command) {
 			const command =
 				client.commands.get(args.command) || search(args.command);
+
 			if (!command) {
+
+				if (args.command == 'syntax') {
+					reply(message, {embed: HelpSyntaxEmbed()}); return;
+				}
+
 				reply(message, {
 					embed: BasicError(
 						`I couldn\'t find the command \`${args.command}\`.\nRun *just* this command without any args to see all the commands the bot has.`,

@@ -138,6 +138,29 @@ export const HelpEmbed = () => {
 	} as Embed;
 };
 
+export const HelpSyntaxEmbed = () => {
+	return {
+		title: 'Command Usage Syntax',
+		description: `
+Each part of a message usage syntax is wrapped in \`(\` and \`)\`.
+If that part is optional, it starts with \`?\` and will look like so:
+\`\`\`xl
+?(<info>)
+\`\`\`
+If something is to be substituted with content, it's wrapped in \`<\` and \`>\`.
+For example, if a command wants media as an argument:
+\`\`\`xl
+?(--url <url>)|(<media>)
+\`\`\`
+Where \`<media>\` is a URL or media attached to your message.
+If that's not viable, there is a \`--url\` flag supported on most messages.
+- The bot will prioritise looking for media from another message if you reply to one.
+- The \`|\` in between the parts  means \`or\`, which means you can use either."
+`.trim(),
+		color: Colors.SurphYellow
+	} as Embed;
+};
+
 export const CommandInfoEmbed = (command: Command, name?: string) => {
 	let fields: EmbedField[] = [];
 
