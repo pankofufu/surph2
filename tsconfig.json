@@ -3,8 +3,7 @@
 	"compilerOptions": {
 		"verbatimModuleSyntax": false,
 		"skipLibCheck": true,
-
-		"moduleResolution": "Node",
+		
 		"lib": ["DOM"],
 
 		"baseUrl": ".",
