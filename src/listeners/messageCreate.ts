@@ -9,14 +9,7 @@ import { reply } from "lib/message/util";
 import { BasicError, ErrorWithStack } from "lib/message/embeds";
 import { getCooldown, leaseCooldown, setCooldown } from "lib/util/cooldown";
 import { now } from "lib/util/time";
-
-const search = (alias: string) => {
-    const keyvalsearch = Array.from(client.commands).find(
-        keyval => keyval[1].aliases && keyval[1].aliases.includes(alias)
-    )
-    return keyvalsearch ? keyvalsearch[1] : null;
-}
-
+import { search } from "lib/util/search";
 export default {
     name: 'messageCreate',
     async run(message: Message) {

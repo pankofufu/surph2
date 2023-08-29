@@ -4,6 +4,7 @@ import { Message } from "eris";
 import { reply } from "lib/message/util";
 import { client } from "../..";
 import { BasicError, CommandInfoEmbed, HelpEmbed } from "lib/message/embeds";
+import { search } from "lib/util/search";
 
 interface HelpArgs extends BaseArgs {
     command?: string;
@@ -30,7 +31,7 @@ export default class HelpCommand extends Command {
 
     async run(message: Message, args: HelpArgs) {
         if (args.command) {
-            const command = client.commands.get(args.command);
+            const command = client.commands.get(args.command) || search(args.command);
             if (!command) {
                 reply(message, { embed: BasicError(`I couldn\'t find the command \`${args.command}\`.\nRun *just* this command without any args to see all the commands the bot has.`) });
                 return;
