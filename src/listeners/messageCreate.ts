@@ -5,6 +5,8 @@ import { Emojis, reaction } from "lib/message/emojis";
 import { client } from "..";
 import { DefaultArgs } from "../classes/Args";
 import { print } from "lib/util/logger";
+import { reply } from "lib/message/util";
+import { ErrorWithStack } from "lib/message/embeds";
 
 const search = (alias: string) => {
     const keyvalsearch = Array.from(client.commands).find(
@@ -38,6 +40,13 @@ export default {
             else if (command.run) await command.run(message, args);
             clearInterval(reactionTimeout); await reaction.remove(Emojis.Loading, message);
                                             // Surprisingly no error if reaction doesn't exist
-        } catch (e) {console.error(e);}
+        } catch (e) {
+            const stack = (e as Error).stack;
+            reply(message, {embed: ErrorWithStack(
+                (e as Error).message, 
+                stack?.substring(stack.indexOf("\n") + 1) || 'Unknown error - check console for details')
+                });
+            console.error(e);
+        }
     },
 } as Event;
