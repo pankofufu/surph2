@@ -26,7 +26,7 @@ export default class DownloadCommand extends Command {
 		super({
 			name: 'download',
 			description: 'Downloads from sites like YouTube.',
-			usage: '?(--audio <boolean>) (--url <url>||<url>)',
+			usage: '?(--audio <boolean>) ?(--url <media>)|(<media>)',
 			aliases: ['dl'],
 		});
 	}

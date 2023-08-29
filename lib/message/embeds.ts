@@ -144,7 +144,7 @@ export const CommandInfoEmbed = (command: Command, name?: string) => {
 	if (command.usage)
 		fields.push({
 			name: 'Usage',
-			value: `\`\`\`${prefix}${command.name} ${command.usage}\`\`\``,
+			value: `\`\`\`md\n${prefix}${command.name} ${command.usage}\`\`\``,
 		});
 	if (command.aliases)
 		fields.push({

@@ -20,7 +20,7 @@ const subcommands: SubCommand[] = [
 			reply(message, { embed: HexEmbed(decode(args.content.after))}); return;
 		},
 		description: 'Decode text from hexadecimal.',
-		usage: '(?(0x)<hexadecimal value>)'
+		usage: '?(0x)(<hexadecimal>)'
 	},
 
 	{

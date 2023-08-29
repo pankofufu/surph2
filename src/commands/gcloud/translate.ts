@@ -22,7 +22,7 @@ export default class TranslateCommand extends Command {
 		super({
 			name: 'translate',
 			description: 'Translates text using Google Translate.',
-			usage: '?(--to <ISO-639 code>) (text|<message>)',
+			usage: '?(--to <ISO-639>) (<text>)',
 			aliases: ['tr', 'googletranslate', 'gtr'],
 		});
 	}

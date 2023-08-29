@@ -31,7 +31,7 @@ export default class ShazamCommand extends Command {
 			description: 'Matches music from media using Shazam.',
 			fullDescription:
 				'Uses a WASM version of Shazam to match a song from video/audio.\nThanks to NULLderef for ripping the WASM and providing code that makes it usable.',
-			usage: '?(--offset <number>) (--url <media url>|<media>)',
+			usage: '?(--offset <number>) ?(--url <media>)|(<media>)',
 			aliases: ['findsong', 'songfind', 'matchsong', 'shz'],
 		});
 	}

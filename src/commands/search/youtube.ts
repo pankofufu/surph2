@@ -24,7 +24,7 @@ export default class YouTubeCommand extends Command {
 			description: 'Searches YouTube for a video.',
 			fullDescription:
 				'Searches YouTube for a video using the provided search query.',
-			usage: '(<search query>)',
+			usage: '(<query>)',
 			aliases: ['yt', 'ytsr', 'searchyt', 'ytsearch'],
 		});
 	}

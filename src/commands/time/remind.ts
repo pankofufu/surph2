@@ -67,7 +67,7 @@ const subcommands: SubCommand[] = [
 			message.addReaction('👌');
 		},
 		description: 'Delete reminders by message ID or by timestamp.',
-		usage: '(<message ID||timestamp>)',
+		usage: '(<message>|<timestamp>)',
 	},
 ];
 
@@ -81,6 +81,7 @@ export default class RemindCommand extends Command {
 			name: 'remind',
 			description: 'Simple relative-time reminder utility.',
 			fullDescription: 'This was horrible to code.',
+			usage: '(<time>) ?(<info>)',
 			aliases: ['reminder', 'remindme', 'alarm'],
 			subcommands: subcommands,
 		});
