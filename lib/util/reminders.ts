@@ -59,9 +59,10 @@ export interface ReminderTimeout {
 }
 
 const watch = async (reminder: DbReminder) => {
-	if (reminder.timestamp * 1000 - now() * 1000 > 2 ** 31) {
-		/* Reminder doesn't activate in the next 24 days
-                                                                 and ideally the bot should be restarting daily */ return;
+	if ((reminder.timestamp * 1000) - (now() * 1000) > (2 ** 31)) {
+		// Reminder doesn't activate in the next 24 days
+		// and ideally the bot should be restarting daily
+		return;
 	}
 	client.timeouts.push({
 		mid: reminder.ids.msg,

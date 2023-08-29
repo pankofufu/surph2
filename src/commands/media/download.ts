@@ -4,7 +4,7 @@ import { APIError, req } from 'lib/api';
 import { getmedia } from 'lib/media/message';
 import { reply } from 'lib/message';
 import { BasicError, ErrorWithStack } from 'lib/message/embeds';
-import { _Text, getFlags } from 'lib/util/flags';
+import { _Text, getFlags } from 'lib/media/flags';
 import { now } from 'lib/util/time';
 
 import { BaseArgs } from 'src/classes/Args';

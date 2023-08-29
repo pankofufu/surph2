@@ -22,6 +22,8 @@ export const _Text: TextType = {
 		'soundcloud.com',
 		'twitter.com',
 		'x.com',
+		'vm.tiktok.com',
+		'tiktok.com'
 	],
 };
 

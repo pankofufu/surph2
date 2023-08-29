@@ -3,7 +3,7 @@ import { Message } from 'eris';
 import { ApiBufferResponse, APIError, req } from 'lib/api';
 import { reply } from 'lib/message';
 import { ErrorWithStack } from 'lib/message/embeds';
-import { getFlags } from 'lib/util/flags';
+import { getFlags } from 'lib/media/flags';
 import { now } from 'lib/util/time';
 
 import { BaseArgs } from 'src/classes/Args';

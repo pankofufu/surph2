@@ -1,4 +1,4 @@
-import { FlagsAndContent, getFlags } from 'lib/util/flags';
+import { FlagsAndContent, getFlags } from 'lib/media/flags';
 
 export interface BaseArgsOptions {
 	content: { before: string; after?: string };

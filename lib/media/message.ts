@@ -1,7 +1,7 @@
 import { Message } from 'eris';
 
 import { print } from 'lib/util';
-import { MediaSubType } from 'lib/util/flags';
+import { MediaSubType } from 'lib/media/flags';
 
 import path from 'path';
 

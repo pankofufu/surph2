@@ -4,7 +4,7 @@ import { APIError, OCRResult, req } from 'lib/api';
 import { getmedia } from 'lib/media/message';
 import { reply } from 'lib/message';
 import { BasicError, ErrorWithStack, OCREmbed } from 'lib/message/embeds';
-import { Media, getFlags } from 'lib/util/flags';
+import { Media, getFlags } from 'lib/media/flags';
 
 import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';

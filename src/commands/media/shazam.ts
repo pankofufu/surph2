@@ -9,7 +9,7 @@ import {
 	ErrorWithStack,
 	ShazamEmbed,
 } from 'lib/message/embeds';
-import { Media, getFlags } from 'lib/util/flags';
+import { Media, getFlags } from 'lib/media/flags';
 
 import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';

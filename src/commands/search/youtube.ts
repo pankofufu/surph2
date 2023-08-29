@@ -2,7 +2,7 @@ import { Message } from 'eris';
 
 import { reply } from 'lib/message';
 import { BasicError } from 'lib/message/embeds';
-import { getFlags } from 'lib/util/flags';
+import { getFlags } from 'lib/media/flags';
 
 import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';
