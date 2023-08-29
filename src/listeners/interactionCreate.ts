@@ -1,47 +1,62 @@
-import type Event from "@surph/src/classes/Event";
-import type { ComponentInteraction, AnyInteraction } from "eris";
-import { client } from "..";
-import { Modals } from "@surph/lib/message";
+import type Event from '@surph/src/classes/Event';
+import type { ComponentInteraction, AnyInteraction } from 'eris';
+import { client } from '..';
+import { Modals } from '@surph/lib/message';
 
 interface InteractionData {
-    custom_id: string;
-    component_type: number;
+	custom_id: string;
+	component_type: number;
 }
 
 export default {
-    name: 'interactionCreate',
-    async run(interaction: AnyInteraction) {
-        if (interaction.type !== 3) return;
-        const _data = (interaction.data); if (!_data) return;
-        const data = _data as InteractionData;
-        
-        (client.carousels.filter(carousel=>carousel.message.author.id === (interaction.member?.id || interaction.user?.id)))
-        .every(async (carousel) => {
-            await interaction.deferUpdate();
-            if (data.custom_id === 'right') carousel.index++;
-            else carousel.index--;
+	name: 'interactionCreate',
+	async run(interaction: AnyInteraction) {
+		if (interaction.type !== 3) return;
+		const _data = interaction.data;
+		if (!_data) return;
+		const data = _data as InteractionData;
 
-            let isFirst = false; if (carousel.index === 0) isFirst = true;
-            let isLast = false; if (carousel.index+1 === carousel.embeds.length) isLast = true;
+		client.carousels
+			.filter(
+				(carousel) =>
+					carousel.message.author.id ===
+					(interaction.member?.id || interaction.user?.id),
+			)
+			.every(async (carousel) => {
+				await interaction.deferUpdate();
+				if (data.custom_id === 'right') carousel.index++;
+				else carousel.index--;
 
-            await interaction.editOriginalMessage({
-                embeds: [carousel.embeds[carousel.index]], 
-                components: [Modals.CarouselComponents(isFirst, isLast)]
-            });
-        });
+				let isFirst = false;
+				if (carousel.index === 0) isFirst = true;
+				let isLast = false;
+				if (carousel.index + 1 === carousel.embeds.length)
+					isLast = true;
 
-        (client.dialogs.filter(dialog=>dialog.message.author.id === (interaction.member?.id || interaction.user?.id)))
-        .every(async (dialog) => {
-            await interaction.deferUpdate();
+				await interaction.editOriginalMessage({
+					embeds: [carousel.embeds[carousel.index]],
+					components: [Modals.CarouselComponents(isFirst, isLast)],
+				});
+			});
 
-            clearTimeout(dialog.timeout);
+		client.dialogs
+			.filter(
+				(dialog) =>
+					dialog.message.author.id ===
+					(interaction.member?.id || interaction.user?.id),
+			)
+			.every(async (dialog) => {
+				await interaction.deferUpdate();
 
-            await interaction.editOriginalMessage({
-                 components: [] // remove them
-            })
+				clearTimeout(dialog.timeout);
 
-            if (data.custom_id === 'yes') await dialog.onConfirm(interaction as ComponentInteraction);
-            else await dialog.onCancel(interaction as ComponentInteraction); 
-        });
-    },
+				await interaction.editOriginalMessage({
+					components: [], // remove them
+				});
+
+				if (data.custom_id === 'yes')
+					await dialog.onConfirm(interaction as ComponentInteraction);
+				else await dialog.onCancel(interaction as ComponentInteraction);
+			});
+	},
 } as Event;

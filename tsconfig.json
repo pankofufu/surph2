@@ -1,32 +1,32 @@
 {
-    "extends": "@sapphire/ts-config",
-    "compilerOptions": {
-        "verbatimModuleSyntax": false,
-        "skipLibCheck": true,
+	"extends": "@sapphire/ts-config",
+	"compilerOptions": {
+		"verbatimModuleSyntax": false,
+		"skipLibCheck": true,
 
-        "moduleResolution": "Node",
+		"moduleResolution": "Node",
 
-        "lib": ["DOM"],
+		"lib": ["DOM"],
 
-        "baseUrl": ".",
-        "outDir": "dist",
-        "paths": {
-            "@surph/src/*": ["src/*"],
-            "@surph/src": ["src/index.ts"],
+		"baseUrl": ".",
+		"outDir": "dist",
+		"paths": {
+			"@surph/src/*": ["src/*"],
+			"@surph/src": ["src/index.ts"],
 
-            "@surph/lib/api": ["lib/api/index.ts"],
-            "@surph/lib/util": ["lib/util/index.ts"],
-            "@surph/lib/media": ["lib/media/index.ts"],
-            "@surph/lib/message": ["lib/message/index.ts"],
+			"@surph/lib/api": ["lib/api/index.ts"],
+			"@surph/lib/util": ["lib/util/index.ts"],
+			"@surph/lib/media": ["lib/media/index.ts"],
+			"@surph/lib/message": ["lib/message/index.ts"],
 
-            "@surph/config": ["config.ts"]
-        }
-    },
-    "include": ["src/**/*", "lib/**/*", "tests/**/*"],
-    "exclude": [
-        "node_modules",
-        "./node_modules",
-        "./node_modules/*",
-        "./node_modules/@types/node/index.d.ts"
-    ]
+			"@surph/config": ["config.ts"]
+		}
+	},
+	"include": ["src/**/*", "lib/**/*", "tests/**/*"],
+	"exclude": [
+		"node_modules",
+		"./node_modules",
+		"./node_modules/*",
+		"./node_modules/@types/node/index.d.ts"
+	]
 }

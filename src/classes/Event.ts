@@ -1,7 +1,7 @@
-import type Eris from "eris";
+import type Eris from 'eris';
 
 export default interface Event {
-    name: keyof Eris.ClientEvents,
-    once?: boolean,
-    run: ((...args: any[]) => void) | ((...args: any[]) => Promise<void>);
+	name: keyof Eris.ClientEvents;
+	once?: boolean;
+	run: ((...args: any[]) => void) | ((...args: any[]) => Promise<void>);
 }
