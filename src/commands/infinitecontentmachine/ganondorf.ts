@@ -11,7 +11,8 @@ import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';
 
 const GANON_SONG = `https://www.youtube.com/watch?v=nnvEbHX7Itc`;
-const GANON_ARGS = `volume=4, pitch=-60, music=${GANON_SONG}, deepfry=100, hue=40`;
+const GANON_SONG_OFFSET: number = 0.8;
+const GANON_ARGS = `volume=4, pitch=-60, music=${GANON_SONG},${GANON_SONG_OFFSET != 0 ? ` musicskip=${GANON_SONG_OFFSET},` : ``} deepfry=100, hue=40`;
 
 interface ExtFlags {
 	url?: string;
