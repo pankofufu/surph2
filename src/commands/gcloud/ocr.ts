@@ -34,8 +34,7 @@ export default class OCRCommand extends Command {
 		/* Logic to get URL from message */
 		const url =
 			flags.url ||
-			getmedia({ message: message, types: [Media.Audio, Media.Video] })
-				?.url ||
+			getmedia({ message: message, types: [Media.Image] })?.url ||
 			null;
 
 		const parsed: ExtArgs = {
