@@ -10,7 +10,6 @@ import { now } from 'lib/util/time';
 import { BaseArgs } from 'src/classes/Args';
 import Command from 'src/classes/Commands/BaseCommand';
 
-
 interface ExtFlags {
 	url?: string;
 }
@@ -32,7 +31,10 @@ export default class EditCommand extends Command {
 	}
 
 	parseArgs(message: Message, sliced: string) {
-		// Remove %ping from content and then find args
+		/* FLOW:
+		 * - Filter out URL from message
+		 * - Then filter out args from new content that doesn't includes URL
+		 */
 		const _flags = getFlags(sliced);
 		const flags: ExtFlags = Object.fromEntries(_flags.flags);
 

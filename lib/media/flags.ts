@@ -1,8 +1,8 @@
 export type MediaSubType = string[];
 export type MediaType = {
-	Video: string[];
-	Audio: string[];
-	Image: string[];
+	Video: MediaSubType;
+	Audio: MediaSubType;
+	Image: MediaSubType;
 };
 
 export const Media: MediaType = {
@@ -13,17 +13,19 @@ export const Media: MediaType = {
 
 export type TextSubType = string[];
 export type TextType = {
-	URL: string[];
+	URL: TextSubType;
 };
 export const _Text: TextType = {
 	URL: /* Allowed URLs: */ [
-		'youtube.com',
+		'youtube.com/watch',
+		'youtube.com/shorts',
+
 		'youtu.be',
 		'soundcloud.com',
 		'twitter.com',
 		'x.com',
 		'vm.tiktok.com',
-		'tiktok.com'
+		'tiktok.com',
 	],
 };
 
