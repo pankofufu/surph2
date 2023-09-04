@@ -25,7 +25,7 @@ export default class PingCommand extends Command {
 			});
 			return;
 		}
-
+		message.addReaction('👌');
 		messageCreate.run(cachedMsg);
 		return;
 	}

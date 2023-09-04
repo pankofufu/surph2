@@ -18,15 +18,13 @@ interface ExtArgs extends BaseArgs {
 	url: string | null;
 }
 
-export default class EditCommand extends Command {
+export default class Audio2VideoCommand extends Command {
 	constructor() {
 		super({
-			name: 'edit',
-			description: 'Edits videos using VEB-like syntax.',
-			fullDescription:
-				'Edits videos using VideoEditBot syntax.\nThanks to Ganer for original VideoEditBot code.\nYou can see a list of VEB commands [here](https://github.com/GanerCodes/videoEditBot/blob/dev/COMMANDS.md).',
-			usage: '?(--url <media>)|(<media>) (<args>)',
-			aliases: ['destroy', 'veb', 'editvid', 'editvideo'],
+			name: 'audio2video',
+			aliases: ['a2v', 'aud2vid'],
+			description: 'Makes a video from audio for Discord iOS users.',
+			usage: '?(--url <media>)|(<media>)',
 		});
 	}
 
@@ -41,7 +39,7 @@ export default class EditCommand extends Command {
 		/* Logic to get URL from message */
 		const mediaObj = getmedia({
 			message: message,
-			types: [Media.Image, Media.Video],
+			types: [Media.Audio],
 		});
 		let media = flags.url || mediaObj?.url || undefined;
 		const parsed: ExtArgs = {
@@ -53,18 +51,10 @@ export default class EditCommand extends Command {
 
 	async run(message: Message, args: ExtArgs): Promise<void> {
 		if (!args.url || args.url === '') {
-			reply(message, { embed: BasicError('Invalid/no media to edit.') });
+			reply(message, { embed: BasicError('Invalid/no media to use.') });
 			return;
 		}
-		const vebArgs = args.content.after;
-		if (!vebArgs) {
-			reply(message, {
-				embed: BasicError('No args to edit media with.'),
-			});
-			return;
-		}
-
-		const res = await req('edit', { url: args.url, args: vebArgs });
+		const res = await req('a2v', { url: args.url });
 		if (res.type !== 'buf') {
 			reply(message, {
 				embed: ErrorWithStack(
