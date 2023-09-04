@@ -5,10 +5,10 @@ import { Message } from 'eris';
 import { BaseArgs } from '../Args';
 import SubCommand from './SubCommand';
 
-
 export interface CommandOptions {
 	name: string;
 	description?: string;
+	disableCache?: boolean;
 	fullDescription?: string;
 	usage?: string;
 	aliases?: string[];
@@ -19,6 +19,7 @@ export interface CommandOptions {
 export default class Command {
 	name: string;
 	description?: string;
+	disableCache?: boolean;
 	fullDescription?: string;
 	usage?: string;
 	aliases?: string[];
@@ -32,6 +33,7 @@ export default class Command {
 		this.usage = options.usage;
 		this.aliases = options.aliases;
 
+		this.disableCache = options.disableCache;
 		this.timeout = options.timeout || settings.defaultTimeout;
 
 		if (options.subcommands) {

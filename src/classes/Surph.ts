@@ -1,6 +1,6 @@
 import { settings, token } from 'config';
 
-import { Client } from 'eris';
+import { Client, Message } from 'eris';
 import { readdirSync } from 'fs';
 
 import { Modals } from 'lib/message';
@@ -10,7 +10,6 @@ import { __src, print, TrackedCommand } from 'lib/util';
 import type Command from 'src/classes/Commands/BaseCommand';
 import type Event from 'src/classes/Event';
 
-
 const fileFilter = (file: string) => {
 	if (file.endsWith('.map') || file.endsWith('.d.ts')) return false;
 	else if (file.endsWith('.js') || file.endsWith('.ts')) return true;
@@ -19,6 +18,7 @@ const fileFilter = (file: string) => {
 
 export default class Surph extends Client {
 	commands: Map<string, Command>;
+	messageCache: Map<string, Message>;
 	carousels: Array<Modals.ActiveCarousel> = [];
 	dialogs: Array<Modals.ActiveDialog> = [];
 	timeouts: Array<ReminderTimeout> = [];
@@ -27,6 +27,7 @@ export default class Surph extends Client {
 	constructor() {
 		super(`Bot ${token}`, settings.client);
 		this.commands = new Map();
+		this.messageCache = new Map();
 		this.cooldowns = [];
 	}
 

@@ -16,7 +16,6 @@ import { client } from 'src';
 import { DefaultArgs } from 'src/classes/Args';
 import Event from 'src/classes/Event';
 
-
 export default {
 	name: 'messageCreate',
 	async run(message: Message) {
@@ -33,6 +32,9 @@ export default {
 		print.info(
 			`Command issued: ${prefix}${command.name} - issued by ${message.author.username}`,
 		);
+
+		if (!command.disableCache)
+			client.messageCache.set(message.author.id, message);
 
 		const cooldown = getCooldown(message, command);
 		if (cooldown) {
@@ -52,7 +54,9 @@ export default {
 					embed: BasicError(
 						`This command is on cooldown.${
 							cooldown.finishedAt
-								? `\nPlease wait ${timeLeft+1} seconds to use this command again.`
+								? `\nPlease wait ${
+										timeLeft + 1
+								  } seconds to use this command again.`
 								: ``
 						}`,
 					),
@@ -63,8 +67,10 @@ export default {
 		const sliced = message.content
 			.slice(prefix.length + q.length)
 			.trimStart();
-		
-		let args = command.parseArgs?.(message, escape.all(sliced)) || DefaultArgs(escape.all(sliced));
+
+		let args =
+			command.parseArgs?.(message, escape.all(sliced)) ||
+			DefaultArgs(escape.all(sliced));
 		const subcommand = args.subcommand?.name
 			? command.subcommands?.get(args.subcommand.name)
 			: undefined;
@@ -72,12 +78,14 @@ export default {
 			args =
 				subcommand.parseArgs?.(
 					message,
-					escape.all( sliced
-						.slice(
-							args.subcommand.alias?.length ||
-								subcommand.name.length,
-						)
-						.trimStart() ),
+					escape.all(
+						sliced
+							.slice(
+								args.subcommand.alias?.length ||
+									subcommand.name.length,
+							)
+							.trimStart(),
+					),
 				) || DefaultArgs(escape.all(sliced));
 		}
 
