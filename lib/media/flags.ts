@@ -19,13 +19,17 @@ export const _Text: TextType = {
 	URL: /* Allowed URLs: */ [
 		'youtube.com/watch',
 		'youtube.com/shorts',
-
 		'youtu.be',
+
 		'soundcloud.com',
+
 		'twitter.com',
 		'x.com',
+
 		'vm.tiktok.com',
 		'tiktok.com',
+
+		'tenor.com/view',
 	],
 };
 
