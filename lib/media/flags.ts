@@ -8,7 +8,7 @@ export type MediaType = {
 export const Media: MediaType = {
 	Video: ['mp4', 'mov', 'mkv', 'webm'],
 	Audio: ['mp3', 'wav', 'm4a', 'flac'],
-	Image: ['jpg', 'jpeg', 'png'],
+	Image: ['jpg', 'jpeg', 'png', 'gif' /* Is gif safe for ocr? */],
 };
 
 export type TextSubType = string[];
