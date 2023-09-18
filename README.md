@@ -6,6 +6,6 @@
 </p>
 
 # Roadmap for v3
-[ ] Add slash command support (rewrite the args system)
-[ ] Integrate the backend into the bot
-[ ] Integrate the cobalt downloading system into .dl
+- [ ] Add slash command support (rewrite the args system)
+- [ ] Integrate the backend into the bot
+- [ ] Integrate the cobalt downloading system into .dl
